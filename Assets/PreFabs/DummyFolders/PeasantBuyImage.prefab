@@ -319,7 +319,7 @@ GameObject:
   - component: {fileID: 7592492048636743704}
   - component: {fileID: 72481963311886845}
   m_Layer: 5
-  m_Name: PeasantUntiyBuy
+  m_Name: PeasantBuyImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
