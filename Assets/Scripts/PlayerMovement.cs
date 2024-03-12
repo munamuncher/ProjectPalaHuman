@@ -57,11 +57,6 @@ public class PlayerMovement : MonoBehaviour
         moveDir = Input.GetAxis("Horizontal");
         Move = new Vector3(moveDir, 0f);
         Move.x = Mathf.Clamp(Move.x, -19.15f, 17.15f);
-        
-        if(moveDir == 0f)
-        {
-            anim.SetFloat("Moving", 0f);
-        }
 
         if(moveDir < 0f)
         {
