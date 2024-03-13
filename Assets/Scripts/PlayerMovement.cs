@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float moveDir;
 
+    #region Awake
     private void Awake()
     {
         if (!TryGetComponent<Rigidbody2D>(out rg))
@@ -46,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
         }
         transform.position = new Vector3(-19f, 1f, 0f);
     }
-
+    #endregion
     private void Update()
     {
         HorizontalMove();
