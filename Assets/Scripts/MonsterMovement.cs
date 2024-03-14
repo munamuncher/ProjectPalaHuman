@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
-public class MonsterMovement : MonoBehaviour
+public class MonsterMovement : MonoBehaviour , IDamageable
 {
     private Rigidbody2D rg;
     private CapsuleCollider2D ccd;
@@ -18,9 +18,14 @@ public class MonsterMovement : MonoBehaviour
     private float AttackCoolDown = 3f;
     [SerializeField]
     private float AttackRange;
+    [SerializeField]
+    private int MonHeatlh = 100;
+
+    public int Health { get; set;}
     #region Awake
     private void Awake()
     {
+        Health = MonHeatlh;
         if (!TryGetComponent<Rigidbody2D>(out rg))
         {
             Debug.Log("MonsterMovement.cs - Awake() - rigidBody2D참조 실패");
@@ -48,7 +53,7 @@ public class MonsterMovement : MonoBehaviour
     }
     #endregion
 
-    private void Update()
+    private void FixedUpdate()
     {
         rayCastTarget();
         if (Target == null)
@@ -66,34 +71,28 @@ public class MonsterMovement : MonoBehaviour
 
             }
         }
-
     }
-    [SerializeField]
-    Transform tr;
-    int mask = (1 << 6);
+    #region RayCast
+
     private void rayCastTarget()
     {
-        RaycastHit2D hit = Physics2D.Raycast(tr.position, Vector2.left, 0.5f, mask);
-        if (Physics.Raycast(tr.position,Vector2.left , 0.5f, mask))
+        int mask = (1 << 7) | (1 << 6) ;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left,0.5f, mask);
+        if (hit)
         {
+            Debug.Log(hit.collider.gameObject.layer);
             Debug.Log("Hit => " + hit.collider.gameObject.name);
-        }
-        Debug.DrawRay(transform.position, Vector2.left, Color.blue, 0.5f);
-        if (hit.collider != null)
-        {
-            if (hit.collider.gameObject.CompareTag("AllyForce") || hit.collider.gameObject.CompareTag("Player"))
-            {
-                Debug.Log(hit.collider.gameObject.name);
-                Target = hit.collider.gameObject;
-                Debug.Log("Working");
-                Debug.DrawRay(transform.position, Vector2.left, Color.white, 0.5f);
-            }
+            Target = hit.collider.gameObject;
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.left) * hit.distance, Color.white);
+
         }
         else
         {
-            Debug.Log("null");
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.left) * hit.distance, Color.red);
+            Debug.Log("No target hit");
             Target = null;
         }
+
     }
     private void moveLeft()
     {
@@ -106,9 +105,30 @@ public class MonsterMovement : MonoBehaviour
         canAttack = false;
         Debug.Log("Attacking");
         anim.SetTrigger("Attack");
+        if (Target.TryGetComponent(out IDamageable hits))
+        {
+            hits.Damage(20);
+        }
         yield return new WaitForSeconds(AttackCoolDown);
         canAttack = true;
 
 
     }
+    #endregion
+    public void Damage(int DamageAmount)
+    {
+        Health -= DamageAmount;
+        MonHeatlh = Health;
+        Debug.Log("Monster took " + DamageAmount + " damage. Remaining health: " + Health);
+        Dead();
+    }
+    public void Dead()
+    {
+        if (Health <= 0)
+        {
+            Debug.Log(gameObject + ("is Dead"));
+            Destroy(gameObject);
+        }
+    }
+
 }

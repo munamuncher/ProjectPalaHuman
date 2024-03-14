@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1865304989}
   - component: {fileID: 1865304988}
   - component: {fileID: 1865304987}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DarkArcher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,3 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7a6d7ff04a15ee47a2fbb1a154bc592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 0
+  Target: {fileID: 0}
+  AttackRange: 0
+  MonHeatlh: 100
