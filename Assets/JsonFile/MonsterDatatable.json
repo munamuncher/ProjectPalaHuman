@@ -1,0 +1,104 @@
+{
+  "units": [
+    {
+      "ID": 10001,
+      "Name": "SkeletonWarrior",
+      "Health": 100,
+      "Damage": 20,
+      "MoveSpeed": 1,
+      "AttackSpeed": 1,
+      "AttackRange": 0.3,
+      "Cost": 0
+    },
+    {
+      "ID": 10002,
+      "Name": "SkeletonTank",
+      "Health": 300,
+      "Damage": 15,
+      "MoveSpeed": 0.5,
+      "AttackSpeed": 0.5,
+      "AttackRange": 0.3,
+      "Cost": 0
+    },
+    {
+      "ID": 10003,
+      "Name": "SlimeMonster",
+      "Health": 150,
+      "Damage": 30,
+      "MoveSpeed": 1,
+      "AttackSpeed": 1.5,
+      "AttackRange": 0.3,
+      "Cost": 0
+    },
+    {
+      "ID": 10004,
+      "Name": "SkeletonSpear",
+      "Health": 100,
+      "Damage": 20,
+      "MoveSpeed": 1,
+      "AttackSpeed": 1,
+      "AttackRange": 0.5,
+      "Cost": 0
+    },
+    {
+      "ID": 10005,
+      "Name": "DarkArcher",
+      "Health": 70,
+      "Damage": 30,
+      "MoveSpeed": 2,
+      "AttackSpeed": 1.5,
+      "AttackRange": 1,
+      "Cost": 0
+    },
+    {
+      "ID": 20001,
+      "Name": "Peasant",
+      "Health": 70,
+      "Damage": 30,
+      "MoveSpeed": 1,
+      "AttackSpeed": 1.5,
+      "AttackRange": 1,
+      "Cost": 50
+    },
+    {
+      "ID": 20002,
+      "Name": "Priest",
+      "Health": 100,
+      "Damage": 20,
+      "MoveSpeed": 1,
+      "AttackSpeed": 1,
+      "AttackRange": 0.3,
+      "Cost": 70
+    },
+    {
+      "ID": 20003,
+      "Name": "Thief",
+      "Health": 80,
+      "Damage": 30,
+      "MoveSpeed": 2,
+      "AttackSpeed": 2,
+      "AttackRange": 0.3,
+      "Cost": 80
+    },
+    {
+      "ID": 20004,
+      "Name": "Soldier",
+      "Health": 120,
+      "Damage": 20,
+      "MoveSpeed": 0.5,
+      "AttackSpeed": 1,
+      "AttackRange": 0.3,
+      "Cost": 100
+    },
+    {
+      "ID": 20005,
+      "Name": "Knight",
+      "Health": 300,
+      "Damage": 15,
+      "MoveSpeed": 0.8,
+      "AttackSpeed": 0.5,
+      "AttackRange": 0.3,
+      "Cost": 150
+    }
+  ]
+}

@@ -6,18 +6,22 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class AllyUnitMovement : MonoBehaviour , IDamageable
 {
+    [SerializeField] private int allyUnitID;
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private float attackRange;
+    [SerializeField] private float attackSpeed;
+    [SerializeField] private float health;
+    [SerializeField] private float ADamage;
+
+    private JsonReader.UnitData unitData;
     private CapsuleCollider2D ccd;
     private Rigidbody2D rg;
     [SerializeField]
     private GameObject enemyTarget;
     private bool canAttack = true;
     private Animator anim;
-    private float AttackCoolDown = 3f;
-    private float moveSpeed;
-    [SerializeField]
-    private int AllyHp = 100;
 
-    public int Health { get; set; }
+    public float Health { get; set; }
     #region Awake
     private void Awake()
     {
@@ -47,9 +51,18 @@ public class AllyUnitMovement : MonoBehaviour , IDamageable
         }
     }
     #endregion
+    private void Start()
+    {
+        LoadUnitData();
+        health = unitData.Health;
+        Health = health;
+        moveSpeed = unitData.Movespeed;
+        attackRange = unitData.AttackRange;
+        attackSpeed = unitData.AttackSpeed;
+        ADamage = unitData.Damage;
+    }
     private void FixedUpdate()
     {
-        Health = AllyHp;
         DetectTarget();
         if (enemyTarget == null)
         {
@@ -70,17 +83,14 @@ public class AllyUnitMovement : MonoBehaviour , IDamageable
     private void DetectTarget()
     {
         int mask = (1 << 8)| (1<<9);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, 0.5f, mask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, attackRange, mask);
         if (hit)
         {
-            Debug.Log(hit.collider.gameObject.layer);
-            Debug.Log("ally Hit => " + hit.collider.gameObject.name);
             enemyTarget = hit.collider.gameObject;
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.right) * hit.distance, Color.white);
         }
         else
         {
-            Debug.Log("No target hit");
             enemyTarget = null;
         }
     }
@@ -93,22 +103,22 @@ public class AllyUnitMovement : MonoBehaviour , IDamageable
     private IEnumerator AttackEnemy()
     {
         canAttack = false;
-        Debug.Log("ally Attacking");
         anim.SetTrigger("Attack");
         if (enemyTarget.TryGetComponent(out IDamageable hits))
         {
-            hits.Damage(20);
+            hits.Damage(ADamage);
         }
-        yield return new WaitForSeconds(AttackCoolDown);
+        yield return new WaitForSeconds(attackSpeed);        
+
         canAttack = true;
 
     }
 
-    public void Damage(int DamageAmount)
+    public void Damage(float DamageAmount)
     {
         Health -= DamageAmount;
-        AllyHp = Health;
-        Debug.Log("Monster took " + DamageAmount + " damage. Remaining health: " + Health);
+        health = Health;
+        Debug.Log(gameObject.name + " is targeting and giving : " + DamageAmount + " damage. Remaining health: " + Health);
         AllyDead();
     }
     public void AllyDead()
@@ -117,6 +127,26 @@ public class AllyUnitMovement : MonoBehaviour , IDamageable
         {
             Debug.Log(gameObject + ("is Dead"));
             Destroy(gameObject);
+        }
+    }
+
+    private void LoadUnitData()
+    {
+        JsonReader jsonReader = JsonReader.Instance;
+        if (jsonReader != null)
+        {
+            foreach (JsonReader.UnitData unit in jsonReader.unitsData.units)
+            {
+                if (unit.ID == allyUnitID)
+                {
+                    unitData = unit;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError("not found Component");
         }
     }
 }

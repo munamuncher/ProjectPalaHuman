@@ -4,36 +4,38 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
-public class MonsterMovement : MonoBehaviour , IDamageable
+public class MonsterMovement : MonoBehaviour, IDamageable
 {
-    private Rigidbody2D rg;
+    [SerializeField] private int monsterID;
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private float attackRange;
+    [SerializeField] private float attackSpeed;
+    [SerializeField] private float health;
+    [SerializeField] private float MDamage;
+
+    private JsonReader.UnitData unitData;
+    [SerializeField]
+    private GameObject target;
+    private Rigidbody2D rb;
     private CapsuleCollider2D ccd;
-    [SerializeField]
-    private float moveSpeed;
-    [SerializeField]
-    private GameObject Target;
-    //private bool isSpawned;
     private Animator anim;
     private bool canAttack = true;
-    private float AttackCoolDown = 3f;
-    [SerializeField]
-    private float AttackRange;
-    [SerializeField]
-    private int MonHeatlh = 100;
 
-    public int Health { get; set;}
+
+
+    public float Health { get; set; }
     #region Awake
     private void Awake()
     {
-        Health = MonHeatlh;
-        if (!TryGetComponent<Rigidbody2D>(out rg))
+
+        if (!TryGetComponent<Rigidbody2D>(out rb))
         {
             Debug.Log("MonsterMovement.cs - Awake() - rigidBody2D참조 실패");
         }
         else
         {
-            rg.simulated = true;
-            rg.gravityScale = 0f;
+            rb.simulated = true;
+            rb.gravityScale = 0f;
         }
 
         if (!TryGetComponent<CapsuleCollider2D>(out ccd))
@@ -52,11 +54,20 @@ public class MonsterMovement : MonoBehaviour , IDamageable
         }
     }
     #endregion
-
+    private void Start()
+    {
+        LoadUnitData();
+        health = unitData.Health;
+        Health = health;
+        moveSpeed = unitData.Movespeed;
+        attackRange = unitData.AttackRange;
+        attackSpeed = unitData.AttackSpeed;
+        MDamage = unitData.Damage;
+    }
     private void FixedUpdate()
     {
         rayCastTarget();
-        if (Target == null)
+        if (target == null)
         {
             moveLeft();
             moveSpeed = 2f;
@@ -67,7 +78,7 @@ public class MonsterMovement : MonoBehaviour , IDamageable
             if (canAttack)
             {
                 moveSpeed = 0f;
-                StartCoroutine(Attack());
+                StartCoroutine(MAttack());
 
             }
         }
@@ -76,21 +87,19 @@ public class MonsterMovement : MonoBehaviour , IDamageable
 
     private void rayCastTarget()
     {
-        int mask = (1 << 7) | (1 << 6) ;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left,0.5f, mask);
+        int mask = (1 << 7) | (1 << 6);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left, attackRange, mask);
         if (hit)
         {
             Debug.Log(hit.collider.gameObject.layer);
-            Debug.Log("Hit => " + hit.collider.gameObject.name);
-            Target = hit.collider.gameObject;
+            target = hit.collider.gameObject;
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.left) * hit.distance, Color.white);
 
         }
         else
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.left) * hit.distance, Color.red);
-            Debug.Log("No target hit");
-            Target = null;
+            target = null;
         }
 
     }
@@ -100,25 +109,22 @@ public class MonsterMovement : MonoBehaviour , IDamageable
         anim.SetFloat("MoveSpeed", 1f);
     }
 
-    private IEnumerator Attack()
+    private IEnumerator MAttack()
     {
         canAttack = false;
-        Debug.Log("Attacking");
         anim.SetTrigger("Attack");
-        if (Target.TryGetComponent(out IDamageable hits))
+        if (target.TryGetComponent(out IDamageable hits))
         {
-            hits.Damage(20);
+            hits.Damage(MDamage);
         }
-        yield return new WaitForSeconds(AttackCoolDown);
+        yield return new WaitForSeconds(attackSpeed);        
         canAttack = true;
-
-
     }
     #endregion
-    public void Damage(int DamageAmount)
+    public void Damage(float DamageAmount)
     {
         Health -= DamageAmount;
-        MonHeatlh = Health;
+        health = Health;
         Debug.Log("Monster took " + DamageAmount + " damage. Remaining health: " + Health);
         Dead();
     }
@@ -131,4 +137,24 @@ public class MonsterMovement : MonoBehaviour , IDamageable
         }
     }
 
+    private void LoadUnitData()
+    {
+        JsonReader jsonReader = JsonReader.Instance;
+        if (jsonReader != null)
+        {
+            Debug.Log(jsonReader.unitsData.units.Length);
+            foreach (JsonReader.UnitData unit in jsonReader.unitsData.units)
+            {
+                if (unit.ID == monsterID)
+                {
+                    unitData = unit;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError("not found Component");
+        }
+    }
 }
