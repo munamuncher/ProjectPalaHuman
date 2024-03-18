@@ -21,7 +21,7 @@ public class AllyUnitMovement : MonoBehaviour , IDamageable
     private bool canAttack = true;
     private Animator anim;
 
-    public float Health { get; set; }
+    public float Healths { get; set; }
     #region Awake
     private void Awake()
     {
@@ -55,11 +55,20 @@ public class AllyUnitMovement : MonoBehaviour , IDamageable
     {
         LoadUnitData();
         health = unitData.Health;
-        Health = health;
-        moveSpeed = unitData.Movespeed;
+        Healths = health;
+        moveSpeed = unitData.MoveSpeed;
         attackRange = unitData.AttackRange;
         attackSpeed = unitData.AttackSpeed;
         ADamage = unitData.Damage;
+        if (unitData == null)
+        {
+            Debug.LogError("Unit data not loaded properly!");
+            return;
+        }
+        else
+        {
+            Debug.Log("its working");
+        }
     }
     private void FixedUpdate()
     {
@@ -116,14 +125,14 @@ public class AllyUnitMovement : MonoBehaviour , IDamageable
 
     public void Damage(float DamageAmount)
     {
-        Health -= DamageAmount;
-        health = Health;
-        Debug.Log(gameObject.name + " is targeting and giving : " + DamageAmount + " damage. Remaining health: " + Health);
+        Healths -= DamageAmount;
+        health = Healths;
+        Debug.Log(gameObject.name + " has taken" + DamageAmount + "Damage" + health + "remainging");
         AllyDead();
     }
     public void AllyDead()
     {
-        if (Health <= 0)
+        if (Healths <= 0)
         {
             Debug.Log(gameObject + ("is Dead"));
             Destroy(gameObject);

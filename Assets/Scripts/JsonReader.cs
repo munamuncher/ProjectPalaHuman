@@ -15,8 +15,6 @@ public class JsonReader : MonoBehaviour
             {
 
                 instance = FindObjectOfType<JsonReader>();
-
-
                 if (instance == null)
                 {
                     GameObject obj = new GameObject("JsonReader");
@@ -38,7 +36,7 @@ public class JsonReader : MonoBehaviour
             Debug.Log("Unit Name: " + unit.Name);
             Debug.Log("Unit Health: " + unit.Health);
             Debug.Log("Unit Damage: " + unit.Damage);
-            Debug.Log("Unit MoveSpeed: " + unit.Movespeed);
+            Debug.Log("Unit MoveSpeed: " + unit.MoveSpeed);
             Debug.Log("Unit AttackSpeed: " + unit.AttackSpeed);
             Debug.Log("Unit AttackRange: " + unit.AttackRange);
             Debug.Log("Unit Cost: " + unit.Cost);
@@ -51,7 +49,7 @@ public class JsonReader : MonoBehaviour
         public string Name;
         public float Health;
         public float Damage;
-        public float Movespeed;
+        public float MoveSpeed;
         public float AttackSpeed;
         public float AttackRange;
         public int Cost;
@@ -62,6 +60,4 @@ public class JsonReader : MonoBehaviour
     {
         public UnitData[] units;
     }
-    public Units MyUnitList = new Units();
-
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour , IDamageable
 {
     private Rigidbody2D rg;
     private CapsuleCollider2D ccd;
@@ -14,10 +14,14 @@ public class PlayerMovement : MonoBehaviour
     private float moveSpeed =5f;
     [SerializeField]
     private float moveDir;
+    private float HP;
 
+
+    public float Healths { get; set; }
     #region Awake
     private void Awake()
     {
+
         if (!TryGetComponent<Rigidbody2D>(out rg))
         {
             Debug.Log("PlayerMovement.cs - Awake() - RigidBody참조 실패");
@@ -48,6 +52,14 @@ public class PlayerMovement : MonoBehaviour
         transform.position = new Vector3(-19f, 1f, 0f);
     }
     #endregion
+
+
+
+    private void Start()
+    {
+        HP = 20f;
+        Healths = HP;  
+    }
     private void Update()
     {
         HorizontalMove();
@@ -81,5 +93,26 @@ public class PlayerMovement : MonoBehaviour
         newPosition.x = Mathf.Clamp(newPosition.x, -19.15f, 17.15f);
         transform.position = newPosition;
     }
+    public void Damage(float DamageAmount)
+    {
+        Healths -= DamageAmount;
+        HP = Healths;
+        Debug.Log(gameObject.name + " has taken" + DamageAmount + "Damage" + HP + "remainging");
+        playerDeath();
+    }
 
+    private void playerDeath()
+    {
+        if (Healths <= 0)
+        {
+            Debug.Log(gameObject + ("is Dead"));
+            anim.SetTrigger("Death");
+            Invoke("death", 4f);
+        }
+        //gameover to GameManager
+    }
+    private void death()
+    {
+        Destroy(gameObject);
+    }
 }

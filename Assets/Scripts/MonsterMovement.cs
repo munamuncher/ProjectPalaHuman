@@ -23,7 +23,7 @@ public class MonsterMovement : MonoBehaviour, IDamageable
 
 
 
-    public float Health { get; set; }
+    public float Healths { get; set; }
     #region Awake
     private void Awake()
     {
@@ -58,8 +58,8 @@ public class MonsterMovement : MonoBehaviour, IDamageable
     {
         LoadUnitData();
         health = unitData.Health;
-        Health = health;
-        moveSpeed = unitData.Movespeed;
+        Healths = health;
+        moveSpeed = unitData.MoveSpeed;
         attackRange = unitData.AttackRange;
         attackSpeed = unitData.AttackSpeed;
         MDamage = unitData.Damage;
@@ -123,14 +123,14 @@ public class MonsterMovement : MonoBehaviour, IDamageable
     #endregion
     public void Damage(float DamageAmount)
     {
-        Health -= DamageAmount;
-        health = Health;
-        Debug.Log("Monster took " + DamageAmount + " damage. Remaining health: " + Health);
+        Healths -= DamageAmount;
+        health = Healths;
+        Debug.Log(gameObject.name + " has taken" + DamageAmount + "Damage" + health + "remainging");
         Dead();
     }
     public void Dead()
     {
-        if (Health <= 0)
+        if (Healths <= 0)
         {
             Debug.Log(gameObject + ("is Dead"));
             Destroy(gameObject);
