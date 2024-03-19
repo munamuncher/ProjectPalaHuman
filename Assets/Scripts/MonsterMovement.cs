@@ -4,30 +4,33 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
-public class MonsterMovement : MonoBehaviour, IDamageable
+public class MonsterMovement : MonoBehaviour/*,IDamageable*/
 {
-    [SerializeField] private int monsterID;
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private float attackRange;
-    [SerializeField] private float attackSpeed;
-    [SerializeField] private float health;
-    [SerializeField] private float MDamage;
 
-    private JsonReader.UnitData unitData;
+    [SerializeField] private float health;
+
+    //private UnitStatusScriptableObject uso;
+    private JsonReader.UnitData myData;
+    public JsonReader.UnitData MyData
+    {
+        set
+        {
+            myData = value;
+        }
+    }
     [SerializeField]
     private GameObject target;
     private Rigidbody2D rb;
     private CapsuleCollider2D ccd;
     private Animator anim;
     private bool canAttack = true;
-
+    
 
 
     public float Healths { get; set; }
     #region Awake
     private void Awake()
     {
-
         if (!TryGetComponent<Rigidbody2D>(out rb))
         {
             Debug.Log("MonsterMovement.cs - Awake() - rigidBody2D참조 실패");
@@ -52,17 +55,12 @@ public class MonsterMovement : MonoBehaviour, IDamageable
         {
             Debug.Log("MonsterMovement.cs - Awake() - Animator참조 실패");
         }
+
     }
-    #endregion
+    #endregion 
     private void Start()
     {
-        LoadUnitData();
-        health = unitData.Health;
-        Healths = health;
-        moveSpeed = unitData.MoveSpeed;
-        attackRange = unitData.AttackRange;
-        attackSpeed = unitData.AttackSpeed;
-        MDamage = unitData.Damage;
+        Debug.Log("unit stats are" + " " + myData.Damage + " " + myData.AttackRange + " " + myData.AttackSpeed + " " + myData.Cost + myData.Health + " " + myData.Name);
     }
     private void FixedUpdate()
     {
@@ -70,14 +68,12 @@ public class MonsterMovement : MonoBehaviour, IDamageable
         if (target == null)
         {
             moveLeft();
-            moveSpeed = 2f;
         }
         else
         {
             anim.SetFloat("MoveSpeed", 0f);
             if (canAttack)
             {
-                moveSpeed = 0f;
                 StartCoroutine(MAttack());
 
             }
@@ -88,7 +84,7 @@ public class MonsterMovement : MonoBehaviour, IDamageable
     private void rayCastTarget()
     {
         int mask = (1 << 7) | (1 << 6);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left, attackRange, mask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left, myData.AttackRange, mask);
         if (hit)
         {
             Debug.Log(hit.collider.gameObject.layer);
@@ -105,7 +101,7 @@ public class MonsterMovement : MonoBehaviour, IDamageable
     }
     private void moveLeft()
     {
-        transform.Translate(Vector3.left * Time.deltaTime * moveSpeed);
+        transform.Translate(Vector3.left * Time.deltaTime * myData.MoveSpeed);
         anim.SetFloat("MoveSpeed", 1f);
     }
 
@@ -115,9 +111,9 @@ public class MonsterMovement : MonoBehaviour, IDamageable
         anim.SetTrigger("Attack");
         if (target.TryGetComponent(out IDamageable hits))
         {
-            hits.Damage(MDamage);
+            hits.Damage(myData.Damage);
         }
-        yield return new WaitForSeconds(attackSpeed);        
+        yield return new WaitForSeconds(myData.AttackSpeed);
         canAttack = true;
     }
     #endregion
@@ -134,27 +130,6 @@ public class MonsterMovement : MonoBehaviour, IDamageable
         {
             Debug.Log(gameObject + ("is Dead"));
             Destroy(gameObject);
-        }
-    }
-
-    private void LoadUnitData()
-    {
-        JsonReader jsonReader = JsonReader.Instance;
-        if (jsonReader != null)
-        {
-            Debug.Log(jsonReader.unitsData.units.Length);
-            foreach (JsonReader.UnitData unit in jsonReader.unitsData.units)
-            {
-                if (unit.ID == monsterID)
-                {
-                    unitData = unit;
-                    break;
-                }
-            }
-        }
-        else
-        {
-            Debug.LogError("not found Component");
         }
     }
 }

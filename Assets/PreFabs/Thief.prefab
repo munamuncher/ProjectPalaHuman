@@ -516,6 +516,7 @@ MonoBehaviour:
   attackSpeed: 0
   health: 0
   ADamage: 0
+  enemyTarget: {fileID: 0}
 --- !u!1 &3290136390250704993
 GameObject:
   m_ObjectHideFlags: 0

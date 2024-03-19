@@ -141,7 +141,7 @@ public class AllyUnitMovement : MonoBehaviour , IDamageable
 
     private void LoadUnitData()
     {
-        JsonReader jsonReader = JsonReader.Instance;
+        JsonReader jsonReader = JsonReader.Insts;
         if (jsonReader != null)
         {
             foreach (JsonReader.UnitData unit in jsonReader.unitsData.units)
