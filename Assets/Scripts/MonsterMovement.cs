@@ -1,15 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
-public class MonsterMovement : MonoBehaviour/*,IDamageable*/
+public class MonsterMovement : MonoBehaviour,IDamageable
 {
-
-    [SerializeField] private float health;
-
-    //private UnitStatusScriptableObject uso;
     private JsonReader.UnitData myData;
     public JsonReader.UnitData MyData
     {
@@ -60,6 +57,7 @@ public class MonsterMovement : MonoBehaviour/*,IDamageable*/
     #endregion 
     private void Start()
     {
+        Healths = myData.Health;
         Debug.Log("unit stats are" + " " + myData.Damage + " " + myData.AttackRange + " " + myData.AttackSpeed + " " + myData.Cost + myData.Health + " " + myData.Name);
     }
     private void FixedUpdate()
@@ -87,7 +85,6 @@ public class MonsterMovement : MonoBehaviour/*,IDamageable*/
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left, myData.AttackRange, mask);
         if (hit)
         {
-            Debug.Log(hit.collider.gameObject.layer);
             target = hit.collider.gameObject;
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.left) * hit.distance, Color.white);
 
@@ -120,8 +117,7 @@ public class MonsterMovement : MonoBehaviour/*,IDamageable*/
     public void Damage(float DamageAmount)
     {
         Healths -= DamageAmount;
-        health = Healths;
-        Debug.Log(gameObject.name + " has taken" + DamageAmount + "Damage" + health + "remainging");
+        Debug.Log(gameObject.name + " has taken" + DamageAmount + "Damage" + Healths + "remainging");
         Dead();
     }
     public void Dead()

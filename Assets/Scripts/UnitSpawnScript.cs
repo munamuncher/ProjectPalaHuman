@@ -1,54 +1,83 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static JsonReader;
+public enum Faction
+{ 
+    Ally,
+    Enemy,
+}
 
 public class UnitSpawnScript : MonoBehaviour
 {
     [SerializeField]
     private UnitStatusScriptableObject usd;
     [SerializeField]
-    private GameObject[] unitPrefab;
-    private MonsterMovement unitScript;
+    private GameObject[] unitPrefabs;
+    private Dictionary<int , GameObject> unitPrefabDictionary = new Dictionary<int , GameObject>();
     [SerializeField]
-    private Transform[] SpawnPoints;
-    private int spawnid;
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Q))
-        {
-            SpawnUnit(10001);
-            spawnid = 0;
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            SpawnUnit(10002);
-            spawnid = 1;
-        }
+    private List<Transform> enemySpawnPoints;
+    [SerializeField]
+    private List<Transform> allySpawnPoints;
+    private MonsterMovement enemyUnitScript;
+    private AllyUnitMovement allyUnitScript;
+    private static UnitSpawnScript _instances;
+    public static UnitSpawnScript _Instances => _instances;
 
-    }
-    public void SpawnUnit(int id)
+    private void Awake()
     {
-        
-        if (usd != null)
+        if (_instances && _instances != this)
         {
-            
-            GameObject newUnit = Instantiate(unitPrefab[spawnid], transform.position, Quaternion.identity);
-            if (newUnit.TryGetComponent<MonsterMovement>(out unitScript))
-            {
-                for(int i = 0; i< usd.UnitData.Length; i++)
-                {
-                    if(usd.UnitData[i].ID == id)
-                    {
-                        unitScript.MyData = usd.UnitData[i];
-                    }
-                }
-            }
-           
+            Destroy(gameObject);
+            return;
         }
         else
         {
-            Debug.LogError("UnitStatusScriptableObject not assigned!");
+            _instances = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        foreach (GameObject prefab in unitPrefabs)
+        {
+            for (int i = 0; i < usd.UnitData.Length; i++)
+            {
+                if (usd.UnitData != null)
+                {
+                    unitPrefabDictionary[usd.UnitData[i].ID] = prefab;
+                }
+
+            }
+
         }
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            SpawnUnit(10001,Faction.Enemy);
+        }
 
+    }
+
+    public void SpawnUnit(int id , Faction faction)
+    {
+        List<Transform> spawnPoints = faction == Faction.Enemy ? enemySpawnPoints : allySpawnPoints;
+        int ran = Random.Range(0, spawnPoints.Count);
+        if(usd!=null && unitPrefabDictionary.ContainsKey(id))
+        {
+            GameObject newUnit = Instantiate(unitPrefabDictionary[id], spawnPoints[ran].position, Quaternion.identity);
+            if(newUnit.TryGetComponent<AllyUnitMovement>(out allyUnitScript))
+            {
+                allyUnitScript._MyData = usd.UnitData[0];
+            }
+            else if(newUnit.TryGetComponent<MonsterMovement>(out enemyUnitScript))
+            {
+                enemyUnitScript.MyData = usd.UnitData[id];
+            }
+        }
+        else
+        {
+            Debug.LogError("UnitStatusScriptableObject not assigned or unit ID not found!");
+        }
+    }
 }

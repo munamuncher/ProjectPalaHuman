@@ -29,15 +29,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1496508989651737860}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.3382807, y: 0.19000006, z: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.8, y: 0.9, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1497748705319240192}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &1555612690202972930
 Animator:
   serializedVersion: 5
@@ -157,7 +157,7 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.8}
+  m_Offset: {x: 2.21, y: 0.8}
   m_Size: {x: 0.5, y: 3.64}
   m_Direction: 0
 --- !u!114 &95000011739800906
@@ -172,12 +172,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abdfb43d92a9a834c8de81cc257132e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allyUnitID: 20004
-  moveSpeed: 0
-  attackRange: 0
-  attackSpeed: 0
-  health: 0
-  ADamage: 0
   enemyTarget: {fileID: 0}
 --- !u!1 &1496508989716596908
 GameObject:
@@ -289,7 +283,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1496508989905817082}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.27, y: 0.947, z: 0}
+  m_LocalPosition: {x: 2.173, y: 0.892, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

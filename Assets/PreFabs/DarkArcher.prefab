@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1596008564094468676}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.4799385, y: 1.19, z: 0}
+  m_LocalPosition: {x: -8.297, y: 1.442, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -171,9 +171,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7a6d7ff04a15ee47a2fbb1a154bc592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterID: 10005
-  moveSpeed: 0
-  attackRange: 0
-  attackSpeed: 0
-  health: 0
-  MDamage: 0
+  target: {fileID: 0}

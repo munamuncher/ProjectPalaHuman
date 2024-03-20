@@ -22,4 +22,8 @@ public class ButtonManager : MonoBehaviour
         Time.timeScale = 1f;
         PausePopUp.SetActive(false);
     }
+    public void PeasentBuy(int id)
+    {
+        UnitSpawnScript._Instances.SpawnUnit(id,Faction.Ally);
+    }
 }

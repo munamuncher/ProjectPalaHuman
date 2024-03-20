@@ -6,13 +6,14 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class AllyUnitMovement : MonoBehaviour , IDamageable
 {
-    [SerializeField] private int allyUnitID;
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private float attackRange;
-    [SerializeField] private float attackSpeed;
-    [SerializeField] private float health;
-    [SerializeField] private float ADamage;
-
+    private JsonReader.UnitData _myData;
+    public JsonReader.UnitData _MyData
+    {
+        set
+        {
+            _myData = value;
+        }
+    }
     private JsonReader.UnitData unitData;
     private CapsuleCollider2D ccd;
     private Rigidbody2D rg;
@@ -53,22 +54,8 @@ public class AllyUnitMovement : MonoBehaviour , IDamageable
     #endregion
     private void Start()
     {
-        LoadUnitData();
-        health = unitData.Health;
-        Healths = health;
-        moveSpeed = unitData.MoveSpeed;
-        attackRange = unitData.AttackRange;
-        attackSpeed = unitData.AttackSpeed;
-        ADamage = unitData.Damage;
-        if (unitData == null)
-        {
-            Debug.LogError("Unit data not loaded properly!");
-            return;
-        }
-        else
-        {
-            Debug.Log("its working");
-        }
+        Healths = _myData.Health;
+        Debug.Log("unit stats are" + " " + _myData.Damage + " " + _myData.AttackRange + " " + _myData.AttackSpeed + " " + _myData.Cost + _myData.Health + " " + _myData.Name);
     }
     private void FixedUpdate()
     {
@@ -76,23 +63,21 @@ public class AllyUnitMovement : MonoBehaviour , IDamageable
         if (enemyTarget == null)
         {
             MoveRight();
-            moveSpeed = 2f;
+
         }
         else
         {
             anim.SetFloat("Speeds", 0f);
             if (canAttack)
             {
-                moveSpeed = 0f;
                 StartCoroutine(AttackEnemy());
-
             }
         }
     }
     private void DetectTarget()
     {
         int mask = (1 << 8)| (1<<9);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, attackRange, mask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, _myData.AttackRange, mask);
         if (hit)
         {
             enemyTarget = hit.collider.gameObject;
@@ -105,7 +90,7 @@ public class AllyUnitMovement : MonoBehaviour , IDamageable
     }
     private void MoveRight()
     {
-        transform.Translate(Vector2.left * (Time.deltaTime * moveSpeed));
+        transform.Translate(Vector2.left * (Time.deltaTime * _myData.MoveSpeed));
         anim.SetFloat("Speeds", 1f);
     }
 
@@ -115,9 +100,9 @@ public class AllyUnitMovement : MonoBehaviour , IDamageable
         anim.SetTrigger("Attack");
         if (enemyTarget.TryGetComponent(out IDamageable hits))
         {
-            hits.Damage(ADamage);
+            hits.Damage(_myData.Damage);
         }
-        yield return new WaitForSeconds(attackSpeed);        
+        yield return new WaitForSeconds(_myData.AttackSpeed);        
 
         canAttack = true;
 
@@ -126,8 +111,7 @@ public class AllyUnitMovement : MonoBehaviour , IDamageable
     public void Damage(float DamageAmount)
     {
         Healths -= DamageAmount;
-        health = Healths;
-        Debug.Log(gameObject.name + " has taken" + DamageAmount + "Damage" + health + "remainging");
+        Debug.Log(gameObject.name + " has taken" + DamageAmount + "Damage" + Healths + "remainging");
         AllyDead();
     }
     public void AllyDead()
@@ -136,26 +120,6 @@ public class AllyUnitMovement : MonoBehaviour , IDamageable
         {
             Debug.Log(gameObject + ("is Dead"));
             Destroy(gameObject);
-        }
-    }
-
-    private void LoadUnitData()
-    {
-        JsonReader jsonReader = JsonReader.Insts;
-        if (jsonReader != null)
-        {
-            foreach (JsonReader.UnitData unit in jsonReader.unitsData.units)
-            {
-                if (unit.ID == allyUnitID)
-                {
-                    unitData = unit;
-                    break;
-                }
-            }
-        }
-        else
-        {
-            Debug.LogError("not found Component");
         }
     }
 }
