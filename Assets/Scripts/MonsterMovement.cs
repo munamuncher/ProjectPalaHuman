@@ -45,7 +45,7 @@ public class MonsterMovement : MonoBehaviour,IDamageable
         else
         {
             ccd.isTrigger = true;
-            ccd.size = new Vector2(0.5f, 1.5f);
+            ccd.size = new Vector2(0.5f, 3f);
         }
         //isSpawned = false;
         if (!TryGetComponent<Animator>(out anim))
@@ -83,6 +83,8 @@ public class MonsterMovement : MonoBehaviour,IDamageable
     {
         int mask = (1 << 7) | (1 << 6);
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left, myData.AttackRange, mask);
+        Vector2 endPoint = hit.collider ? hit.point : (Vector2)transform.position + Vector2.left * myData.AttackRange * 2;
+        Debug.DrawLine(transform.position, endPoint, Color.red);
         if (hit)
         {
             target = hit.collider.gameObject;

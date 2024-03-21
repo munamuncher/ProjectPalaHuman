@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6983551836596789711}
   - component: {fileID: 6983551836596789696}
   - component: {fileID: 6983551836596789697}
-  - component: {fileID: 6983551836596789710}
   - component: {fileID: 356565799}
   - component: {fileID: 356565798}
   - component: {fileID: 356565797}
@@ -110,18 +109,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6983551836596789710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6983551836596789698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 892b86870c3385c488acdf7c83c1d8ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &356565799
 Rigidbody2D:
   serializedVersion: 4
@@ -157,7 +144,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.5}
-  m_Size: {x: 0.55, y: 1.5}
+  m_Size: {x: 0.55, y: 3}
   m_Direction: 0
 --- !u!114 &356565797
 MonoBehaviour:
@@ -171,9 +158,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7a6d7ff04a15ee47a2fbb1a154bc592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterID: 10003
-  moveSpeed: 0
-  attackRange: 0
-  attackSpeed: 0
-  health: 0
-  MDamage: 0
+  target: {fileID: 0}

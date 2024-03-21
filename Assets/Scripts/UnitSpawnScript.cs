@@ -37,18 +37,22 @@ public class UnitSpawnScript : MonoBehaviour
             _instances = this;
             DontDestroyOnLoad(gameObject);
         }
-        foreach (GameObject prefab in unitPrefabs)
-        {
-            for (int i = 0; i < usd.UnitData.Length; i++)
-            {
-                if (usd.UnitData != null)
-                {
-                    unitPrefabDictionary[usd.UnitData[i].ID] = prefab;
-                }
 
+        for (int i = 0; i < usd.UnitData.Length; i++)
+        {
+            if (usd.UnitData != null)
+            {
+                unitPrefabDictionary[usd.UnitData[i].ID] = unitPrefabs[i];
             }
 
         }
+
+
+        foreach (var pair in unitPrefabDictionary)
+        {
+            Debug.Log("Key: " + pair.Key + ", Value: " + pair.Value);
+        }
+
     }
     private void Update()
     {
@@ -65,15 +69,19 @@ public class UnitSpawnScript : MonoBehaviour
         int ran = Random.Range(0, spawnPoints.Count);
         if(usd!=null && unitPrefabDictionary.ContainsKey(id))
         {
-            GameObject newUnit = Instantiate(unitPrefabDictionary[id], spawnPoints[ran].position, Quaternion.identity);
+            GameObject newUnit = Instantiate(unitPrefabDictionary[id], spawnPoints[ran].position,Quaternion.identity);
+            newUnit.SetActive(true);
             if(newUnit.TryGetComponent<AllyUnitMovement>(out allyUnitScript))
             {
-                allyUnitScript._MyData = usd.UnitData[0];
+                allyUnitScript._MyData = usd.scriptableDictionary[id];
+                newUnit.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                
             }
             else if(newUnit.TryGetComponent<MonsterMovement>(out enemyUnitScript))
             {
-                enemyUnitScript.MyData = usd.UnitData[id];
+                enemyUnitScript.MyData = usd.scriptableDictionary[id];
             }
+            
         }
         else
         {

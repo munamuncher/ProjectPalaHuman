@@ -73,11 +73,14 @@ public class AllyUnitMovement : MonoBehaviour , IDamageable
                 StartCoroutine(AttackEnemy());
             }
         }
+
     }
     private void DetectTarget()
     {
         int mask = (1 << 8)| (1<<9);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, _myData.AttackRange, mask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, _myData.AttackRange * 2 , mask);
+        Vector2 endPoint = hit.collider ? hit.point : (Vector2)transform.position + Vector2.right * _myData.AttackRange * 2;
+        Debug.DrawLine(transform.position, endPoint, Color.red);
         if (hit)
         {
             enemyTarget = hit.collider.gameObject;

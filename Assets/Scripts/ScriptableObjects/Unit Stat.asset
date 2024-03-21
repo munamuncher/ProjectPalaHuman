@@ -16,7 +16,7 @@ MonoBehaviour:
   - ID: 10001
     Name: SkeletonWarrior
     Health: 100
-    Damage: 20
+    Damage: 10
     MoveSpeed: 1
     AttackSpeed: 1
     AttackRange: 0.3
@@ -24,7 +24,7 @@ MonoBehaviour:
   - ID: 10002
     Name: SkeletonTank
     Health: 300
-    Damage: 15
+    Damage: 5
     MoveSpeed: 0.5
     AttackSpeed: 0.5
     AttackRange: 0.3
@@ -32,7 +32,7 @@ MonoBehaviour:
   - ID: 10003
     Name: SlimeMonster
     Health: 150
-    Damage: 30
+    Damage: 15
     MoveSpeed: 1
     AttackSpeed: 1.5
     AttackRange: 0.3
@@ -40,7 +40,7 @@ MonoBehaviour:
   - ID: 10004
     Name: SkeletonSpear
     Health: 100
-    Damage: 20
+    Damage: 15
     MoveSpeed: 1
     AttackSpeed: 1
     AttackRange: 0.5
@@ -48,7 +48,7 @@ MonoBehaviour:
   - ID: 10005
     Name: DarkArcher
     Health: 70
-    Damage: 30
+    Damage: 10
     MoveSpeed: 2
     AttackSpeed: 1.5
     AttackRange: 1
@@ -56,7 +56,7 @@ MonoBehaviour:
   - ID: 20001
     Name: Peasant
     Health: 70
-    Damage: 30
+    Damage: 5
     MoveSpeed: 1
     AttackSpeed: 1.5
     AttackRange: 1
@@ -64,7 +64,7 @@ MonoBehaviour:
   - ID: 20002
     Name: Priest
     Health: 100
-    Damage: 20
+    Damage: 10
     MoveSpeed: 1
     AttackSpeed: 1
     AttackRange: 0.3
@@ -72,7 +72,7 @@ MonoBehaviour:
   - ID: 20003
     Name: Thief
     Health: 80
-    Damage: 30
+    Damage: 15
     MoveSpeed: 2
     AttackSpeed: 2
     AttackRange: 0.3
@@ -80,7 +80,7 @@ MonoBehaviour:
   - ID: 20004
     Name: Soldier
     Health: 120
-    Damage: 20
+    Damage: 10
     MoveSpeed: 0.5
     AttackSpeed: 1
     AttackRange: 0.3
@@ -88,7 +88,7 @@ MonoBehaviour:
   - ID: 20005
     Name: Knight
     Health: 300
-    Damage: 15
+    Damage: 5
     MoveSpeed: 0.8
     AttackSpeed: 0.5
     AttackRange: 0.3
