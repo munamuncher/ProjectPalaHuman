@@ -15,7 +15,7 @@ public class UnitSpawnScript : MonoBehaviour
     private UnitStatusScriptableObject usd;
     [SerializeField]
     private GameObject[] unitPrefabs;
-    private Dictionary<int , GameObject> unitPrefabDictionary = new Dictionary<int , GameObject>();
+    private Dictionary<int, GameObject> unitPrefabDictionary = new Dictionary<int, GameObject>();
     [SerializeField]
     private List<Transform> enemySpawnPoints;
     [SerializeField]
@@ -58,30 +58,30 @@ public class UnitSpawnScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            SpawnUnit(10001,Faction.Enemy);
+            SpawnUnit(10001, Faction.Enemy);
         }
 
     }
 
-    public void SpawnUnit(int id , Faction faction)
+    public void SpawnUnit(int id, Faction faction)
     {
         List<Transform> spawnPoints = faction == Faction.Enemy ? enemySpawnPoints : allySpawnPoints;
         int ran = Random.Range(0, spawnPoints.Count);
-        if(usd!=null && unitPrefabDictionary.ContainsKey(id))
+        if (usd != null && unitPrefabDictionary.ContainsKey(id))
         {
-            GameObject newUnit = Instantiate(unitPrefabDictionary[id], spawnPoints[ran].position,Quaternion.identity);
+            GameObject newUnit = Instantiate(unitPrefabDictionary[id], spawnPoints[ran].position, Quaternion.identity);
             newUnit.SetActive(true);
-            if(newUnit.TryGetComponent<AllyUnitMovement>(out allyUnitScript))
+            if (newUnit.TryGetComponent<AllyUnitMovement>(out allyUnitScript))
             {
                 allyUnitScript._MyData = usd.scriptableDictionary[id];
                 newUnit.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-                
             }
-            else if(newUnit.TryGetComponent<MonsterMovement>(out enemyUnitScript))
+            else if (newUnit.TryGetComponent<MonsterMovement>(out enemyUnitScript))
             {
                 enemyUnitScript.MyData = usd.scriptableDictionary[id];
             }
-            
+
+           
         }
         else
         {
