@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
     [SerializeField]
-    private Image healthbar;
     private int health;
     private int maxHealth;
 
@@ -15,9 +14,9 @@ public class HealthBar : MonoBehaviour
     public static HealthBar _Inst => _inst;
 
     [SerializeField]
-    private List<HealthBar> observers = new List<HealthBar>();
+    private List<IObserver> observers = new List<IObserver>();
 
-    public void AddObserver(HealthBar observer)
+    public void AddObserver(IObserver observer)
     {
         if (!observers.Contains(observer))
         {
@@ -25,7 +24,7 @@ public class HealthBar : MonoBehaviour
         }
     }
 
-    public void RemoveObserver(HealthBar observer)
+    public void RemoveObserver(IObserver observer)
     {
         observers.Remove(observer);
     }
@@ -33,18 +32,9 @@ public class HealthBar : MonoBehaviour
     {
         health = currentHealth;
         this.maxHealth = maxHealth;
-        displayBar();
+
+        //observers.OnNotify();
     }
 
-    private void displayBar()
-    {
-        if(maxHealth !=0)
-        {
-            float healthPercentage = (float)health/maxHealth;
-            healthbar.fillAmount = healthPercentage;
-        }
-        else
-            healthbar.fillAmount = 0;
-    }
 
 }

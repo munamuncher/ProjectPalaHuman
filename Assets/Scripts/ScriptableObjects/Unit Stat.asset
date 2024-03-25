@@ -51,7 +51,7 @@ MonoBehaviour:
     Damage: 10
     MoveSpeed: 2
     AttackSpeed: 1.5
-    AttackRange: 1
+    AttackRange: 3
     Cost: 0
   - ID: 20001
     Name: Peasant
@@ -59,7 +59,7 @@ MonoBehaviour:
     Damage: 5
     MoveSpeed: 1
     AttackSpeed: 1.5
-    AttackRange: 1
+    AttackRange: 3
     Cost: 50
   - ID: 20002
     Name: Priest

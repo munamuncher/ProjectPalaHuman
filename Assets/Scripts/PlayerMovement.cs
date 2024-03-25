@@ -88,7 +88,6 @@ public class PlayerMovement : MonoBehaviour , IDamageable
     }
     private void FixedUpdate()
     { 
-
         Vector3 newPosition = transform.position + new Vector3(Move.x * (Time.deltaTime * moveSpeed), 0f, 0f);
         newPosition.x = Mathf.Clamp(newPosition.x, -19.15f, 17.15f);
         transform.position = newPosition;
