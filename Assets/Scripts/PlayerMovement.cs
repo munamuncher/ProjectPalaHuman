@@ -15,6 +15,10 @@ public class PlayerMovement : MonoBehaviour , IDamageable
     [SerializeField]
     private float moveDir;
     private float HP;
+    private HealthBar healthBarUI;
+    private HpBarUI hpbarUI;
+    [SerializeField]
+    private GameObject hpbr;
 
 
     public float Healths { get; set; }
@@ -58,7 +62,14 @@ public class PlayerMovement : MonoBehaviour , IDamageable
     private void Start()
     {
         HP = 20f;
-        Healths = HP;  
+        Healths = HP;
+        healthBarUI = HealthBar._Inst;
+
+        if(healthBarUI == null)
+        {
+            HpBarUI hpBarUI = InstantiateHpBarUI();
+            healthBarUI.AddObserver(hpbarUI);
+        }
     }
     private void Update()
     {
@@ -113,5 +124,11 @@ public class PlayerMovement : MonoBehaviour , IDamageable
     private void death()
     {
         Destroy(gameObject);
+    }
+    private HpBarUI InstantiateHpBarUI()
+    {
+        GameObject hpBarUIPrefab = hpbr;
+        GameObject hpBarUIObject = Instantiate(hpBarUIPrefab, transform.position, Quaternion.identity);
+        return hpBarUIObject.GetComponent<HpBarUI>();
     }
 }

@@ -22,6 +22,7 @@ public class HealthBar : MonoBehaviour
         {
             observers.Add(observer);
         }
+        Debug.Log("observer hase been added");
     }
 
     public void RemoveObserver(IObserver observer)
@@ -32,8 +33,10 @@ public class HealthBar : MonoBehaviour
     {
         health = currentHealth;
         this.maxHealth = maxHealth;
-
-        //observers.OnNotify();
+        foreach (var observer in observers)
+        {
+            observer.OnNotify();
+        }
     }
 
 

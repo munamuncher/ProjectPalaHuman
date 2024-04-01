@@ -9,6 +9,9 @@ public class HpBarUI : MonoBehaviour, IObserver
     private Image PlayerHpbar;
     private int health;
     private int maxHealth;
+    private static HpBarUI _Insta;
+    public static HpBarUI Insta => _Insta;
+
 
     public void OnNotify()
     {
