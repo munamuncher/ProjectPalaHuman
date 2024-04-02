@@ -14,6 +14,7 @@ public class PlayerMovement : SubjectScript , IDamageable
     private float moveSpeed =5f;
     [SerializeField]
     private float moveDir;
+    public float maxHP;
     public float HP;
 
 
@@ -57,9 +58,10 @@ public class PlayerMovement : SubjectScript , IDamageable
 
     private void Start()
     {
-        HP = 20f;
+        maxHP = 200f;
+        HP = maxHP;
         Healths = HP; 
-        notifyObservers();
+        
 
     }
     private void Update()
@@ -100,6 +102,7 @@ public class PlayerMovement : SubjectScript , IDamageable
         HP = Healths;
         Debug.Log(gameObject.name + " has taken" + DamageAmount + "Damage" + HP + "remainging");
         playerDeath();
+        notifyObservers();
 
     }
 

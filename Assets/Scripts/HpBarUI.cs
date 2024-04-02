@@ -8,6 +8,8 @@ public class HpBarUI : MonoBehaviour, IObserver
     [SerializeField] SubjectScript _playerSubject;
     [SerializeField]
     private Image PlayerHpbar;
+    [SerializeField]
+    private Image PlayerUIHPbar;
     private PlayerMovement pm;
     private GameObject player;
 
@@ -19,6 +21,10 @@ public class HpBarUI : MonoBehaviour, IObserver
         {
             Debug.Log("gotten");
         }
+        else
+        {
+            Debug.Log("cannot be found");
+        }
 
     }
     public void OnDisable()
@@ -27,19 +33,17 @@ public class HpBarUI : MonoBehaviour, IObserver
     } 
     public void OnNotify()
     {
-        ReduceHpbar(pm.HP);
-        Debug.Log(pm.HP);
-        Debug.Log("HealthBar has been noticed changing Healthbar");
+        ReduceHpbar(pm.HP,pm.maxHP);
     }
 
-    private void ReduceHpbar(float currentHP)
+    private void ReduceHpbar(float currentHP, float maxHealth)
     {
-        float maxHealth = currentHP;
         if (currentHP > 0)
         {
-            
             float healthPercentage = (float)currentHP/maxHealth;
             PlayerHpbar.fillAmount = healthPercentage;
+            PlayerUIHPbar.fillAmount = PlayerHpbar.fillAmount;
+
         }
         else
             PlayerHpbar.fillAmount = 0;
