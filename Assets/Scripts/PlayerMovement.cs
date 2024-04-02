@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
-public class PlayerMovement : MonoBehaviour , IDamageable
+public class PlayerMovement : SubjectScript , IDamageable 
 {
     private Rigidbody2D rg;
     private CapsuleCollider2D ccd;
@@ -14,11 +14,7 @@ public class PlayerMovement : MonoBehaviour , IDamageable
     private float moveSpeed =5f;
     [SerializeField]
     private float moveDir;
-    private float HP;
-    private HealthBar healthBarUI;
-    private HpBarUI hpbarUI;
-    [SerializeField]
-    private GameObject hpbr;
+    public float HP;
 
 
     public float Healths { get; set; }
@@ -62,14 +58,9 @@ public class PlayerMovement : MonoBehaviour , IDamageable
     private void Start()
     {
         HP = 20f;
-        Healths = HP;
-        healthBarUI = HealthBar._Inst;
+        Healths = HP; 
+        notifyObservers();
 
-        if(healthBarUI == null)
-        {
-            HpBarUI hpBarUI = InstantiateHpBarUI();
-            healthBarUI.AddObserver(hpbarUI);
-        }
     }
     private void Update()
     {
@@ -109,6 +100,7 @@ public class PlayerMovement : MonoBehaviour , IDamageable
         HP = Healths;
         Debug.Log(gameObject.name + " has taken" + DamageAmount + "Damage" + HP + "remainging");
         playerDeath();
+
     }
 
     private void playerDeath()
@@ -119,16 +111,11 @@ public class PlayerMovement : MonoBehaviour , IDamageable
             anim.SetTrigger("Death");
             Invoke("death", 4f);
         }
-        //gameover to GameManager
+       //GameOver
+
     }
     private void death()
     {
         Destroy(gameObject);
-    }
-    private HpBarUI InstantiateHpBarUI()
-    {
-        GameObject hpBarUIPrefab = hpbr;
-        GameObject hpBarUIObject = Instantiate(hpBarUIPrefab, transform.position, Quaternion.identity);
-        return hpBarUIObject.GetComponent<HpBarUI>();
     }
 }

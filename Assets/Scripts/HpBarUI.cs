@@ -5,24 +5,40 @@ using UnityEngine.UI;
 
 public class HpBarUI : MonoBehaviour, IObserver
 {
+    [SerializeField] SubjectScript _playerSubject;
     [SerializeField]
     private Image PlayerHpbar;
-    private int health;
-    private int maxHealth;
-    private static HpBarUI _Insta;
-    public static HpBarUI Insta => _Insta;
+    private PlayerMovement pm;
+    private GameObject player;
 
+    public void OnEnable()
+    {
+        _playerSubject.AddObserver(this);
+        player = GameObject.FindGameObjectWithTag("Player");
+        if(player.TryGetComponent<PlayerMovement>(out pm))
+        {
+            Debug.Log("gotten");
+        }
 
+    }
+    public void OnDisable()
+    {
+        _playerSubject.RemoveObserver(this);
+    } 
     public void OnNotify()
     {
-        ReduceHpbar();
+        ReduceHpbar(pm.HP);
+        Debug.Log(pm.HP);
+        Debug.Log("HealthBar has been noticed changing Healthbar");
     }
 
-    private void ReduceHpbar()
+    private void ReduceHpbar(float currentHP)
     {
-        if (maxHealth != 0)
+        float maxHealth = currentHP;
+        if (currentHP > 0)
         {
-            float healthPercentage = (float)health / maxHealth;
+            
+            float healthPercentage = (float)currentHP/maxHealth;
             PlayerHpbar.fillAmount = healthPercentage;
         }
         else

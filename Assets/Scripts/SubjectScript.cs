@@ -3,15 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : MonoBehaviour
+public abstract class SubjectScript : MonoBehaviour
 {
-    [SerializeField]
-    private int health;
-    private int maxHealth;
-
-    private static HealthBar _inst;
-
-    public static HealthBar _Inst => _inst;
 
     [SerializeField]
     private List<IObserver> observers = new List<IObserver>();
@@ -29,10 +22,8 @@ public class HealthBar : MonoBehaviour
     {
         observers.Remove(observer);
     }
-    public void UpdateHealth(int currentHealth, int maxHealth)
+    public void notifyObservers()
     {
-        health = currentHealth;
-        this.maxHealth = maxHealth;
         foreach (var observer in observers)
         {
             observer.OnNotify();
