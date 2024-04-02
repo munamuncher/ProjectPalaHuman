@@ -14715,6 +14715,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerSubject: {fileID: 1960126148}
   PlayerHpbar: {fileID: 70051872}
+  PlayerUIHPbar: {fileID: 1526048929}
 --- !u!114 &1073435250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27295,6 +27296,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDir: 0
+  maxHP: 0
   HP: 0
 --- !u!70 &1960126149
 CapsuleCollider2D:
