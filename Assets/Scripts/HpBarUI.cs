@@ -42,7 +42,7 @@ public class HpBarUI : MonoBehaviour, IObserver
         {
             float healthPercentage = (float)currentHP/maxHealth;
             PlayerHpbar.fillAmount = healthPercentage;
-            PlayerUIHPbar.fillAmount = PlayerHpbar.fillAmount;
+            PlayerUIHPbar.fillAmount = healthPercentage;
 
         }
         else
