@@ -21735,7 +21735,7 @@ MonoBehaviour:
   m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_FillOrigin: 1
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1526048930
@@ -25675,6 +25675,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eab6a9a95bc8bbd47b91cef11495200b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spPointBar: {fileID: 1131478207}
+  spawnPointText: {fileID: 2071225920}
 --- !u!4 &1882547958
 Transform:
   m_ObjectHideFlags: 0

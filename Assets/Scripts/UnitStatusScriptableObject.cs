@@ -30,7 +30,7 @@ public class UnitStatusScriptableObject : ScriptableObject
         }            
         foreach (var pair in scriptableDictionary)
         {
-            Debug.Log("Key: " + pair.Key + ", Value: " + pair.Value);
+            //Debug.Log("Key: " + pair.Key + ", Value: " + pair.Value);
         }
     }
 

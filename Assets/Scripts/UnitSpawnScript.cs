@@ -23,6 +23,7 @@ public class UnitSpawnScript : MonoBehaviour
     private MonsterMovement enemyUnitScript;
     private AllyUnitMovement allyUnitScript;
     private static UnitSpawnScript _instances;
+    private GameManager gm;
     public static UnitSpawnScript _Instances => _instances;
 
     private void Awake()
@@ -48,10 +49,10 @@ public class UnitSpawnScript : MonoBehaviour
         }
 
 
-        foreach (var pair in unitPrefabDictionary)
-        {
-            Debug.Log("Key: " + pair.Key + ", Value: " + pair.Value);
-        }
+        //foreach (var pair in unitPrefabDictionary)
+        //{
+        //    Debug.Log("Key: " + pair.Key + ", Value: " + pair.Value);
+        //}
 
     }
     private void Update()
@@ -65,23 +66,36 @@ public class UnitSpawnScript : MonoBehaviour
 
     public void SpawnUnit(int id, Faction faction)
     {
+        gm = GameManager.Inst;
         List<Transform> spawnPoints = faction == Faction.Enemy ? enemySpawnPoints : allySpawnPoints;
         int ran = Random.Range(0, spawnPoints.Count);
         if (usd != null && unitPrefabDictionary.ContainsKey(id))
         {
-            GameObject newUnit = Instantiate(unitPrefabDictionary[id], spawnPoints[ran].position, Quaternion.identity);
-            newUnit.SetActive(true);
-            if (newUnit.TryGetComponent<AllyUnitMovement>(out allyUnitScript))
+            if (gm.CanBuy(usd.scriptableDictionary[id].Cost))
             {
-                allyUnitScript._MyData = usd.scriptableDictionary[id];
-                newUnit.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-            }
-            else if (newUnit.TryGetComponent<MonsterMovement>(out enemyUnitScript))
-            {
-                enemyUnitScript.MyData = usd.scriptableDictionary[id];
-            }
+                GameObject newUnit = Instantiate(unitPrefabDictionary[id], spawnPoints[ran].position, Quaternion.identity);
+                newUnit.SetActive(true);
+                Debug.Log(usd.scriptableDictionary[id].Cost);
 
-           
+                if (newUnit.TryGetComponent<AllyUnitMovement>(out allyUnitScript))
+                {
+                    gm.isBuy(usd.scriptableDictionary[id].Cost);
+                    allyUnitScript._MyData = usd.scriptableDictionary[id];
+                    newUnit.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+
+                }
+
+
+                else if (newUnit.TryGetComponent<MonsterMovement>(out enemyUnitScript))
+                {
+                    enemyUnitScript.MyData = usd.scriptableDictionary[id];
+                }
+
+            }
+            else
+            {
+                Debug.Log("not enough SpawnPoints");
+            }
         }
         else
         {
