@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
@@ -21,6 +22,8 @@ public class MonsterMovement : MonoBehaviour,IDamageable
     private CapsuleCollider2D ccd;
     private Animator anim;
     private bool canAttack = true;
+    [SerializeField]
+    private Image enemyHPBar;
     
 
 
@@ -120,6 +123,7 @@ public class MonsterMovement : MonoBehaviour,IDamageable
     {
         Healths -= DamageAmount;
         Debug.Log(gameObject.name + " has taken" + DamageAmount + "Damage" + Healths + "remainging");
+        ReduceMonHp(Healths, myData.Health);
         Dead();
     }
     public void Dead()
@@ -129,5 +133,18 @@ public class MonsterMovement : MonoBehaviour,IDamageable
             Debug.Log(gameObject + ("is Dead"));
             Destroy(gameObject);
         }
+    }
+
+    private void ReduceMonHp(float currentHP, float maxHP)
+    {
+        if (currentHP > 0)
+        {
+            float healthPercentage = (float)currentHP / maxHP;
+            enemyHPBar.fillAmount = healthPercentage;
+            enemyHPBar.fillAmount = healthPercentage;
+
+        }
+        else
+            enemyHPBar.fillAmount = 0;
     }
 }

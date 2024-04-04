@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CapsuleCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -24,6 +25,8 @@ public class AllyUnitMovement : MonoBehaviour , IDamageable
     private float maxHealth;
     private bool canAttack = true;
     private Animator anim;
+    [SerializeField]
+    private Image AllyHPbar;
 
     public float Healths { get; set; }
     #region Awake
@@ -119,6 +122,7 @@ public class AllyUnitMovement : MonoBehaviour , IDamageable
     {
         Healths -= DamageAmount;
         Debug.Log(gameObject.name + " has taken" + DamageAmount + "Damage" + Healths + "remainging");
+        ReduceMonHp(Healths, _myData.Health);
         AllyDead();
     }
     public void AllyDead()
@@ -128,5 +132,18 @@ public class AllyUnitMovement : MonoBehaviour , IDamageable
             Debug.Log(gameObject + ("is Dead"));
             Destroy(gameObject);
         }
+    }
+
+    private void ReduceMonHp(float currentHP, float maxHP)
+    {
+        if (currentHP > 0)
+        {
+            float healthPercentage = (float)currentHP / maxHP;
+            AllyHPbar.fillAmount = healthPercentage;
+            AllyHPbar.fillAmount = healthPercentage;
+
+        }
+        else
+            AllyHPbar.fillAmount = 0;
     }
 }

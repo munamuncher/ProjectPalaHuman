@@ -74,6 +74,7 @@ public class UnitSpawnScript : MonoBehaviour
             if (gm.CanBuy(usd.scriptableDictionary[id].Cost))
             {
                 GameObject newUnit = Instantiate(unitPrefabDictionary[id], spawnPoints[ran].position, Quaternion.identity);
+                //스폰 포인트의 따라 레이어 지정을 여기서??
                 newUnit.SetActive(true);
                 Debug.Log(usd.scriptableDictionary[id].Cost);
 
@@ -101,5 +102,17 @@ public class UnitSpawnScript : MonoBehaviour
         {
             Debug.LogError("UnitStatusScriptableObject not assigned or unit ID not found!");
         }
+    }
+
+    private void SetLayer(int spawnPos)
+    {
+        //스폰 포인트를 받아와서 그 유닛의 스프라잇랜더러를 가져와서 수정해준다?
+        //스위치문에서 레이어를 리턴으로 해준다?
+        switch (spawnPos)
+        {
+            case 0:
+                break;
+        }
+
     }
 }
