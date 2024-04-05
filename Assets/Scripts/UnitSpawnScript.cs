@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 using static JsonReader;
 public enum Faction
 { 
@@ -20,6 +21,7 @@ public class UnitSpawnScript : MonoBehaviour
     private List<Transform> enemySpawnPoints;
     [SerializeField]
     private List<Transform> allySpawnPoints;
+
     private MonsterMovement enemyUnitScript;
     private AllyUnitMovement allyUnitScript;
     private static UnitSpawnScript _instances;
@@ -74,6 +76,7 @@ public class UnitSpawnScript : MonoBehaviour
             if (gm.CanBuy(usd.scriptableDictionary[id].Cost))
             {
                 GameObject newUnit = Instantiate(unitPrefabDictionary[id], spawnPoints[ran].position, Quaternion.identity);
+                SetLayer(ran, newUnit);
                 //스폰 포인트의 따라 레이어 지정을 여기서??
                 newUnit.SetActive(true);
                 Debug.Log(usd.scriptableDictionary[id].Cost);
@@ -104,15 +107,33 @@ public class UnitSpawnScript : MonoBehaviour
         }
     }
 
-    private void SetLayer(int spawnPos)
+    private void SetLayer(int spawnPosLayer , GameObject target)
     {
-        //스폰 포인트를 받아와서 그 유닛의 스프라잇랜더러를 가져와서 수정해준다?
-        //스위치문에서 레이어를 리턴으로 해준다?
-        switch (spawnPos)
+        
+        Debug.Log("Setting layer of" + target + "retreived" + spawnPosLayer);
+        if(!target.TryGetComponent<SortingGroup>(out SortingGroup sg))
+        {
+            Debug.Log("UnitSpawnScript.cs - SetLayer() - SortingGroup참조 실패");
+        }
+        switch (spawnPosLayer)
         {
             case 0:
+                sg.sortingOrder = 1;
+                Debug.Log("Setting layer to" + target.layer + " have increased");
                 break;
-        }
+            case 1:
+                sg.sortingOrder = 2;
+                Debug.Log("Setting layer to" + target.layer + " have increased");
+                break;
+            case 2:
+                sg.sortingOrder = 3;
+                Debug.Log("Setting layer to" + target.layer + " have increased");
+                break;
+            case 3:
+                sg.sortingOrder = 4;
+                Debug.Log("Setting layer to" + target.layer + " have increased");
+                break;
 
+        }
     }
 }

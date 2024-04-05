@@ -116,6 +116,7 @@ GameObject:
   - component: {fileID: 2964989989021817629}
   - component: {fileID: 2964989989021817627}
   - component: {fileID: 2964989989021817628}
+  - component: {fileID: 8285474867601060339}
   m_Layer: 8
   m_Name: SkeletonWarrior
   m_TagString: Untagged
@@ -288,6 +289,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   enemyHPBar: {fileID: 3960087908374148717}
+--- !u!210 &8285474867601060339
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2964989990264825779}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &3482149893410886843
 GameObject:
   m_ObjectHideFlags: 0

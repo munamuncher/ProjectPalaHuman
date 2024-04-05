@@ -41,6 +41,14 @@ public class GameManager : MonoBehaviour
         StartCoroutine("EarnPoints");
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.G))
+        {
+            spawnPoints += 100;
+        }
+    }
+
     public bool CanBuy(int cost)
     {
         return spawnPoints >= cost;
