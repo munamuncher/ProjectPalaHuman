@@ -2,17 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemeyBase : MonoBehaviour
+public class EnemeyBase : SubjectScript , IDamageable
 {
-    // Start is called before the first frame update
-    void Start()
+    public float maxHP;
+    public float HP;
+
+    public float Healths { get; set;}
+
+
+    private void Start()
     {
-        
+        maxHP = 1000f;
+        HP = maxHP;
+        Healths = HP;
+    }
+    public void Damage(float Amount)
+    {
+        Healths -= Amount;
+        HP = Healths;
+        Debug.Log(gameObject.name + " has taken" + Amount + "Damage" + HP + "remainging");
+        notifyObservers();
+        if (HP <= 0)
+        {
+            baseExplode();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void baseExplode()
     {
-        
+        Destroy(gameObject);
     }
 }
