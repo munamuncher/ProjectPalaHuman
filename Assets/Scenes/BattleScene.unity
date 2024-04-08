@@ -9252,10 +9252,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'StageClear and GameOver Text
+  m_text: 'you have won!!
 
-
-'
+    Congratz'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -9282,8 +9281,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -16641,7 +16640,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e66d0eaa43d5ab4faaf929bedba0ce9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PausePopUp: {fileID: 2096953414}
 --- !u!4 &1242114189
 Transform:
   m_ObjectHideFlags: 0
@@ -20745,7 +20743,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1521000319
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24738,6 +24736,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spPointBar: {fileID: 1131478207}
   spawnPointText: {fileID: 2071225920}
+  PausePopUp: {fileID: 2096953414}
+  GameOverPopUp: {fileID: 1521000318}
+  GameEndText: {fileID: 694829701}
 --- !u!4 &1882547958
 Transform:
   m_ObjectHideFlags: 0

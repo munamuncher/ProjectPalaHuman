@@ -30,6 +30,7 @@ public class EnemeyBase : SubjectScript , IDamageable
 
     private void baseExplode()
     {
+        GameManager.Inst.StateOfGame(GameState.GameOver);
         Destroy(gameObject);
     }
 }

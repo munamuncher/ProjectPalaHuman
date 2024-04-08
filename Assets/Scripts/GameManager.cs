@@ -8,17 +8,28 @@ public enum GameState
 {     
        GameStart,
        GamePause,
-       GameEnd,
+       GameResume,
+       GameOver,
+       GameWin,
 }
 
 public class GameManager : MonoBehaviour
-{
-    private int spawnPoints;
-    private int maxSpawnPonints;
+{  
     [SerializeField]
     private Image spPointBar;
     [SerializeField]
     private TextMeshProUGUI spawnPointText;
+    [SerializeField]
+    private GameObject PausePopUp;
+    [SerializeField]
+    private GameObject GameOverPopUp;
+    [SerializeField]
+    private TextMeshProUGUI GameEndText;
+
+
+    private int spawnPoints;
+    private int maxSpawnPonints;
+
 
     private static GameManager _instance;
     public static GameManager Inst => _instance;
@@ -35,10 +46,7 @@ public class GameManager : MonoBehaviour
             _instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        maxSpawnPonints = 500;
-        spawnPoints = 0;
-        UpdatePoint();
-        StartCoroutine("EarnPoints");
+        StateOfGame(GameState.GameStart);
     }
 
     private void Update()
@@ -90,6 +98,7 @@ public class GameManager : MonoBehaviour
 
             }
             yield return new WaitForSeconds(0.5f);
+            Debug.Log(spawnPoints);
         }
     }
     private void UpdatePoint()
@@ -104,6 +113,53 @@ public class GameManager : MonoBehaviour
         {
             spPointBar.fillAmount = 0;
         }
+    }
+    
+    private void GameEndText_Update(GameState GameEnd)
+    {
+        if(GameEnd == GameState.GameWin)
+        {
+            GameEndText.text = ("You have Won!! \n Congratulation!" );
+        }
+        else
+        {
+            GameEndText.text = ("You have Died!! \n Misson Failed");
+        }
+    }
+
+    public void StateOfGame(GameState gs)
+    {
+        switch (gs)
+        {
+            case GameState.GameStart:
+                Time.timeScale = 1f;
+                maxSpawnPonints = 500;
+                spawnPoints = 0;    
+                UpdatePoint();
+                StartCoroutine("EarnPoints");
+                PausePopUp.SetActive(false);
+                GameOverPopUp.SetActive(false);
+                break;
+            case GameState.GamePause:
+                PausePopUp.SetActive(true);
+                Time.timeScale = 0f;
+                break;
+            case GameState.GameResume:
+                Time.timeScale = 1f;
+                PausePopUp.SetActive(false);
+                break;
+            case GameState.GameOver:
+                GameOverPopUp.SetActive(true);
+                GameEndText_Update(GameState.GameOver);
+                Time.timeScale = 0f;
+                break;
+            case GameState.GameWin:
+                GameOverPopUp.SetActive(true);
+                GameEndText_Update(GameState.GameWin);
+                Time.timeScale = 0f;
+                break;
+       }
+
     }
 
 }
