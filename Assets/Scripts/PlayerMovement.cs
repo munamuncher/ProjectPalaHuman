@@ -114,11 +114,10 @@ public class PlayerMovement : SubjectScript , IDamageable
             anim.SetTrigger("Death");
             Invoke("death", 4f);
         }
-       //GameOver
 
     }
     private void death()
     {
-        Destroy(gameObject);
+        GameManager.Inst.StateOfGame(GameState.GameOver);
     }
 }

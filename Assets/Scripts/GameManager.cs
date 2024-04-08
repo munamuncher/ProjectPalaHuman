@@ -120,10 +120,12 @@ public class GameManager : MonoBehaviour
         if(GameEnd == GameState.GameWin)
         {
             GameEndText.text = ("You have Won!! \n Congratulation!" );
+            GameEndText.color = Color.green;
         }
         else
         {
             GameEndText.text = ("You have Died!! \n Misson Failed");
+            GameEndText.color = Color.red;
         }
     }
 
