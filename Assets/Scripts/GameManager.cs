@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
 
             }
             yield return new WaitForSeconds(0.5f);
-            Debug.Log(spawnPoints);
+
         }
     }
     private void UpdatePoint()
@@ -119,32 +119,37 @@ public class GameManager : MonoBehaviour
     
     private void GameEndText_Update(GameState GameEnd)
     {
+        Debug.Log(GameEnd);
         if(GameEnd == GameState.GameWin)
         {
             GameEndText.text = ("You have Won!! \n Congratulation!" );
             GameEndText.color = Color.green;
         }
-        else
+        else if(GameEnd == GameState.GameOver)
         {
             GameEndText.text = ("You have Died!! \n Misson Failed");
             GameEndText.color = Color.red;
         }
     }
 
-    private void GameOverStarUpdate(GameState EndStar)
+    private void GameOverStarUpdate(GameState EndStar) // todo leenTween 사용해서 개선하기
     {
+        Debug.Log("Star has been called");
         if(EndStar == GameState.GameStart)
         {
-            for(int i =0; i >= 2;i++)
+            Debug.Log("Game start has been called and will trun off all the stars");
+            for(int i =0; i <= 2 ;i++)
             {
                 Debug.Log("turning off all stars");
-                stars[i].SetActive(false);
+                stars[i].gameObject.SetActive(false);
+                Debug.Log(stars[i].gameObject);
             }
         }
         else if(EndStar == GameState.GameWin)
         {
-           stars[1].SetActive(true);
-           stars[3].SetActive(true);
+            Debug.Log("Game Win has been called now fillin the stars");
+           stars[0].gameObject.SetActive(true);
+           stars[2].gameObject.SetActive(true);
         }
     }
 
@@ -159,7 +164,6 @@ public class GameManager : MonoBehaviour
                 spawnPoints = 0;    
                 UpdatePoint();
                 StartCoroutine("EarnPoints");
-                
                 PausePopUp.SetActive(false);
                 GameOverPopUp.SetActive(false);
                 

@@ -68,7 +68,7 @@ public class MonsterMovement : MonoBehaviour,IDamageable
         rayCastTarget();
         if (target == null)
         {
-            moveLeft();
+                moveLeft();
         }
         else
         {
@@ -111,6 +111,7 @@ public class MonsterMovement : MonoBehaviour,IDamageable
     {
         canAttack = false;
         anim.SetTrigger("Attack");
+        yield return new WaitForSeconds(0.5f);
         if (target.TryGetComponent(out IDamageable hits))
         {
             hits.Damage(myData.Damage);

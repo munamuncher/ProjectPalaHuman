@@ -16,6 +16,7 @@ public class PlayerMovement : SubjectScript , IDamageable
     private float moveDir;
     public float maxHP;
     public float HP;
+    private bool isDead;
 
 
     public float Healths { get; set; }
@@ -39,6 +40,7 @@ public class PlayerMovement : SubjectScript , IDamageable
         }
         else
         {
+            ccd.enabled = true;
             ccd.isTrigger = true;
             ccd.size = new Vector2(0.5f, 2f);
         }
@@ -61,6 +63,7 @@ public class PlayerMovement : SubjectScript , IDamageable
         maxHP = 200f;
         HP = maxHP;
         Healths = HP; 
+        isDead = false;
         
 
     }
@@ -98,22 +101,31 @@ public class PlayerMovement : SubjectScript , IDamageable
     }
     public void Damage(float DamageAmount)
     {
-        Healths -= DamageAmount;
-        HP = Healths;
-        Debug.Log(gameObject.name + " has taken" + DamageAmount + "Damage" + HP + "remainging");
-        playerDeath();
-        notifyObservers();
-
+        if (!isDead)
+        {
+            anim.SetTrigger("HasBeenHit");
+            Healths -= DamageAmount;
+            HP = Healths;
+            Debug.Log(gameObject.name + " has taken" + DamageAmount + "Damage" + HP + "remainging");
+            notifyObservers();
+            
+            if (Healths <= 0)
+            {
+                isDead = true;
+            }
+        }
+        else
+        {
+            playerDeath();
+        }
     }
 
     private void playerDeath()
     {
-        if (Healths <= 0)
-        {
+            ccd.enabled = false;
             Debug.Log(gameObject + ("is Dead"));
             anim.SetTrigger("Death");
-            Invoke("death", 4f);
-        }
+            Invoke("death", 3.5f);
 
     }
     private void death()
