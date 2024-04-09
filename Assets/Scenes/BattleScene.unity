@@ -24739,6 +24739,10 @@ MonoBehaviour:
   PausePopUp: {fileID: 2096953414}
   GameOverPopUp: {fileID: 1521000318}
   GameEndText: {fileID: 694829701}
+  stars:
+  - {fileID: 1117433860}
+  - {fileID: 664491176}
+  - {fileID: 632104701}
 --- !u!4 &1882547958
 Transform:
   m_ObjectHideFlags: 0

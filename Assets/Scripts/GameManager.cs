@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
     private GameObject GameOverPopUp;
     [SerializeField]
     private TextMeshProUGUI GameEndText;
+    [SerializeField]
+    private List<GameObject> stars;
 
 
     private int spawnPoints;
@@ -129,18 +131,38 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void GameOverStarUpdate(GameState EndStar)
+    {
+        if(EndStar == GameState.GameStart)
+        {
+            for(int i =0; i >= 2;i++)
+            {
+                Debug.Log("turning off all stars");
+                stars[i].SetActive(false);
+            }
+        }
+        else if(EndStar == GameState.GameWin)
+        {
+           stars[1].SetActive(true);
+           stars[3].SetActive(true);
+        }
+    }
+
     public void StateOfGame(GameState gs)
     {
         switch (gs)
         {
             case GameState.GameStart:
+                GameOverStarUpdate(GameState.GameStart);
                 Time.timeScale = 1f;
                 maxSpawnPonints = 500;
                 spawnPoints = 0;    
                 UpdatePoint();
                 StartCoroutine("EarnPoints");
+                
                 PausePopUp.SetActive(false);
                 GameOverPopUp.SetActive(false);
+                
                 break;
             case GameState.GamePause:
                 PausePopUp.SetActive(true);
@@ -158,6 +180,7 @@ public class GameManager : MonoBehaviour
             case GameState.GameWin:
                 GameOverPopUp.SetActive(true);
                 GameEndText_Update(GameState.GameWin);
+                GameOverStarUpdate(GameState.GameWin);
                 Time.timeScale = 0f;
                 break;
        }
