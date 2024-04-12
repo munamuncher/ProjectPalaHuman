@@ -20,17 +20,27 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI spawnPointText;
     [SerializeField]
-    private GameObject PausePopUp;
+    private GameObject pausePopUp;
     [SerializeField]
-    private GameObject GameOverPopUp;
+    private GameObject gameOverPopUp;
     [SerializeField]
-    private TextMeshProUGUI GameEndText;
+    private TextMeshProUGUI gameEndText;
     [SerializeField]
     private List<GameObject> stars;
+    [SerializeField]
+    private Image expBar;
+    [SerializeField]
+    private GameObject levelUpPopUp;
+    [SerializeField]
+    private TextMeshProUGUI expBarText;
 
-
+    private int playerLevel;
+    private int expMaxPoint;
+    private int expPoints;
+    private bool hasLevelUp;
     private int spawnPoints;
     private int maxSpawnPonints;
+    private LevelUpPopUp lvlupPopCS;
 
 
     private static GameManager _instance;
@@ -48,6 +58,16 @@ public class GameManager : MonoBehaviour
             _instance = this;
             DontDestroyOnLoad(gameObject);
         }
+
+
+        if(levelUpPopUp != null)
+        {
+            if(!TryGetComponent<LevelUpPopUp>(out lvlupPopCS))
+            {
+                Debug.Log("GameManager.cs - Awake() - LevelUpPopUp 참조 실패");
+            }
+        }
+        
         StateOfGame(GameState.GameStart);
     }
 
@@ -58,7 +78,7 @@ public class GameManager : MonoBehaviour
             spawnPoints += 100;
         }
     }
-
+    #region _Buy_&&_Spawn_
     public bool CanBuy(int cost)
     {
         return spawnPoints >= cost;
@@ -103,6 +123,7 @@ public class GameManager : MonoBehaviour
 
         }
     }
+    
     private void UpdatePoint()
     {
         if (spawnPoints > 0)
@@ -116,19 +137,21 @@ public class GameManager : MonoBehaviour
             spPointBar.fillAmount = 0;
         }
     }
-    
+    #endregion
+
+    #region _GameState_
     private void GameEndText_Update(GameState GameEnd)
     {
         Debug.Log(GameEnd);
         if(GameEnd == GameState.GameWin)
         {
-            GameEndText.text = ("You have Won!! \n Congratulation!" );
-            GameEndText.color = Color.green;
+            gameEndText.text = ("You have Won!! \n Congratulation!" );
+            gameEndText.color = Color.green;
         }
         else if(GameEnd == GameState.GameOver)
         {
-            GameEndText.text = ("You have Died!! \n Misson Failed");
-            GameEndText.color = Color.red;
+            gameEndText.text = ("You have Died!! \n Misson Failed");
+            gameEndText.color = Color.red;
         }
     }
 
@@ -145,12 +168,64 @@ public class GameManager : MonoBehaviour
                 Debug.Log(stars[i].gameObject);
             }
         }
-        else if(EndStar == GameState.GameWin)
+        else if(EndStar == GameState.GameWin) // todo 조건에 따라 별 휙득
         {
             Debug.Log("Game Win has been called now fillin the stars");
            stars[0].gameObject.SetActive(true);
            stars[2].gameObject.SetActive(true);
         }
+    }
+    #endregion
+
+    #region _EXP_&&_LevelUp_
+    public void DeathExpUp()
+    {
+        expPoints += 5;
+        ExpBar_Update();
+        Debug.Log("exp has risen" + expPoints);
+    }
+
+    private void ExpBar_Update()
+    {
+        if (expPoints >= expMaxPoint)
+        {
+            hasLevelUp = true;
+        }
+        if (!hasLevelUp)
+        {
+            float expPointsPercentage = (float)expPoints / expMaxPoint;
+            expBar.fillAmount = expPointsPercentage;
+        }
+        else
+        {
+            LevelUp();
+            expPoints = 0;
+            expBar.fillAmount = 0;
+        }
+    }
+
+    private void LevelUp()
+    {
+        if(hasLevelUp)
+        {
+            expMaxPoint *= 2;
+            Debug.Log(expMaxPoint);
+            playerLevel++;
+            expBarText.text = playerLevel.ToString();
+            levelUpPopUp.gameObject.SetActive(true);
+            StateOfGame(GameState.GamePause);
+        }
+        else
+        {
+            expBarText.text = playerLevel.ToString();
+        }
+    }
+    #endregion
+
+
+    private void DisplayLevelUpSelection()
+    {
+        
     }
 
     public void StateOfGame(GameState gs)
@@ -160,29 +235,35 @@ public class GameManager : MonoBehaviour
             case GameState.GameStart:
                 GameOverStarUpdate(GameState.GameStart);
                 Time.timeScale = 1f;
+                expMaxPoint = 20;
                 maxSpawnPonints = 500;
-                spawnPoints = 0;    
+                spawnPoints = 0;
+                expPoints = 0;
+                playerLevel = 1;
+                hasLevelUp = false;
                 UpdatePoint();
+                LevelUp();
+                ExpBar_Update();
                 StartCoroutine("EarnPoints");
-                PausePopUp.SetActive(false);
-                GameOverPopUp.SetActive(false);
+                pausePopUp.SetActive(false);
+                gameOverPopUp.SetActive(false);
                 
                 break;
             case GameState.GamePause:
-                PausePopUp.SetActive(true);
+                pausePopUp.SetActive(true);
                 Time.timeScale = 0f;
                 break;
             case GameState.GameResume:
                 Time.timeScale = 1f;
-                PausePopUp.SetActive(false);
+                pausePopUp.SetActive(false);
                 break;
             case GameState.GameOver:
-                GameOverPopUp.SetActive(true);
+                gameOverPopUp.SetActive(true);
                 GameEndText_Update(GameState.GameOver);
                 Time.timeScale = 0f;
                 break;
             case GameState.GameWin:
-                GameOverPopUp.SetActive(true);
+                gameOverPopUp.SetActive(true);
                 GameEndText_Update(GameState.GameWin);
                 GameOverStarUpdate(GameState.GameWin);
                 Time.timeScale = 0f;

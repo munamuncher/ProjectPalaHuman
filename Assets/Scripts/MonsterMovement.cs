@@ -61,7 +61,6 @@ public class MonsterMovement : MonoBehaviour,IDamageable
     private void Start()
     {
         Healths = myData.Health;
-        Debug.Log("unit stats are" + " " + myData.Damage + " " + myData.AttackRange + " " + myData.AttackSpeed + " " + myData.Cost + myData.Health + " " + myData.Name);
     }
     private void FixedUpdate()
     {
@@ -123,7 +122,6 @@ public class MonsterMovement : MonoBehaviour,IDamageable
     public void Damage(float DamageAmount)
     {
         Healths -= DamageAmount;
-        Debug.Log(gameObject.name + " has taken" + DamageAmount + "Damage" + Healths + "remainging");
         ReduceMonHp(Healths, myData.Health);
         Dead();
     }
@@ -131,7 +129,7 @@ public class MonsterMovement : MonoBehaviour,IDamageable
     {
         if (Healths <= 0)
         {
-            Debug.Log(gameObject + ("is Dead"));
+            GameManager.Inst.DeathExpUp();
             Destroy(gameObject);
         }
     }
