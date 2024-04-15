@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI expBarText;
 
+    private int manaPoint;
+    private int maxManaPoint;
     private int playerLevel;
     private int expMaxPoint;
     private int expPoints;
@@ -213,6 +215,7 @@ public class GameManager : MonoBehaviour
             playerLevel++;
             expBarText.text = playerLevel.ToString();
             levelUpPopUp.gameObject.SetActive(true);
+            lvlupPopCS.Displayskill(); // todo Skill script 완성후 스킬 종류를 게임 매니저한테 받아서 levelupPopup 한테 전달
             StateOfGame(GameState.GamePause);
         }
         else
@@ -222,7 +225,10 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    public void SkillInput(string SkillName)
+    {
 
+    }
     private void DisplayLevelUpSelection()
     {
         
@@ -250,7 +256,10 @@ public class GameManager : MonoBehaviour
                 
                 break;
             case GameState.GamePause:
-                pausePopUp.SetActive(true);
+                if(!hasLevelUp)
+                {
+                    pausePopUp.SetActive(true);
+                }
                 Time.timeScale = 0f;
                 break;
             case GameState.GameResume:

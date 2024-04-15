@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ButtonManager : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class ButtonManager : MonoBehaviour
     {
         UnitSpawnScript._Instances.SpawnUnit(id, Faction.Ally);
     }
-    public void SkillUsed(int id)
+    public void SkillUsed(string skillname)
     {
 
     }

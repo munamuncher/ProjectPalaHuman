@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 
 public enum LevelType
 {
@@ -40,5 +41,10 @@ public class LevelUpPopUp : MonoBehaviour
                 Debug.Log(" Drops a Meteor from the sky and Increase by  " + " skill increase amount Function " + " Amount");
                 break;
         }
+    }
+    
+    public void Displayskill()
+    {
+
     }
 }

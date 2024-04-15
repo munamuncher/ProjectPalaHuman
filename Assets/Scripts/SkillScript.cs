@@ -28,7 +28,7 @@ public class SkillScript : MonoBehaviour
         skillDictionary[skill] = skillFunction;
     }
 
-    private void UseageSkill()
+    public void UseageSkill(string skillname)
     {
 
     }
