@@ -17,11 +17,7 @@ public class EnemyBaseHp : MonoBehaviour ,IObserver
     {
         _EnemyBase.AddObserver(this);
         Base = GameObject.FindGameObjectWithTag("EnemyBase");
-        if (Base.TryGetComponent<EnemeyBase>(out eb))
-        {
-            Debug.Log("gotten eb");
-        }
-        else
+        if (!Base.TryGetComponent<EnemeyBase>(out eb))
         {
             Debug.Log("cannot be found");
         }

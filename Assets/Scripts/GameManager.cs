@@ -14,25 +14,35 @@ public enum GameState
 }
 
 public class GameManager : MonoBehaviour
-{  
+{ 
+    //todo UImanager 만들어서 UI 옮기기
+    //UI Image---------------------
     [SerializeField]
-    private Image spPointBar;
-    [SerializeField]
-    private TextMeshProUGUI spawnPointText;
-    [SerializeField]
-    private GameObject pausePopUp;
-    [SerializeField]
-    private GameObject gameOverPopUp;
-    [SerializeField]
-    private TextMeshProUGUI gameEndText;
-    [SerializeField]
-    private List<GameObject> stars;
+    private Image spPointBar;    
     [SerializeField]
     private Image expBar;
     [SerializeField]
+    private Image manaBar;
+
+    //PopUpGameObjects-------------
+    [SerializeField]
+    private GameObject pausePopUp;
+    [SerializeField]
+    private GameObject gameOverPopUp;    
+    [SerializeField]
+    private List<GameObject> stars;    
+    [SerializeField]
     private GameObject levelUpPopUp;
+
+    //UI Text---------------------
+    [SerializeField]
+    private TextMeshProUGUI gameEndText;   
+    [SerializeField]
+    private TextMeshProUGUI spawnPointText;
     [SerializeField]
     private TextMeshProUGUI expBarText;
+    [SerializeField]
+    private TextMeshProUGUI manaPointtext;
 
     private int manaPoint;
     private int maxManaPoint;
@@ -140,6 +150,43 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
+    IEnumerator EarnMana()
+    {
+        
+        while(true)
+        {
+            if(manaPoint >= maxManaPoint)
+            {
+                Debug.Log("mana is full");
+                
+            }
+            else
+            {
+                manaPoint += 5;
+                UpdateMana();
+                Debug.Log("EarnMana else is being called");
+            }
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+    private void UpdateMana()
+    {
+        
+        if(manaPoint > 0)
+        {  
+            Debug.Log("Update mana is called");
+            Debug.Log("mana is rising" +  manaPoint);
+            manaPointtext.text = (manaPoint.ToString() + "/"+ maxManaPoint.ToString());
+            float manaPointPercentage = (float)manaPoint / maxManaPoint;
+            manaBar.fillAmount = manaPointPercentage;
+        }
+        else
+        {
+            Debug.Log("setting it zero");
+            manaBar.fillAmount=0;
+        }
+    }
 
     #region _GameState_
     private void GameEndText_Update(GameState GameEnd)
@@ -241,16 +288,21 @@ public class GameManager : MonoBehaviour
             case GameState.GameStart:
                 GameOverStarUpdate(GameState.GameStart);
                 Time.timeScale = 1f;
+                maxManaPoint = 200;
+                
                 expMaxPoint = 20;
                 maxSpawnPonints = 500;
+                manaPoint = 0;
                 spawnPoints = 0;
                 expPoints = 0;
                 playerLevel = 1;
                 hasLevelUp = false;
                 UpdatePoint();
+                UpdateMana();
                 LevelUp();
                 ExpBar_Update();
-                StartCoroutine("EarnPoints");
+                StartCoroutine("UpdateMana");
+                StartCoroutine("EarnPoints");  
                 pausePopUp.SetActive(false);
                 gameOverPopUp.SetActive(false);
                 
