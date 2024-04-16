@@ -184,7 +184,7 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("setting it zero");
-            manaBar.fillAmount=0;
+            manaBar.fillAmount = 0;
         }
     }
 
@@ -301,7 +301,7 @@ public class GameManager : MonoBehaviour
                 UpdateMana();
                 LevelUp();
                 ExpBar_Update();
-                StartCoroutine("UpdateMana");
+                StartCoroutine("EarnMana");
                 StartCoroutine("EarnPoints");  
                 pausePopUp.SetActive(false);
                 gameOverPopUp.SetActive(false);

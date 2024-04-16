@@ -9,7 +9,7 @@ public class SkillScript : MonoBehaviour
     //하나의 델리게이트로 여러 함수들에 접근해서 실행 할수있다
     public delegate void SkillFunction();
 
-
+    //todo component patteren usage
 
     private Dictionary<string, SkillFunction> skillDictionary;
 
