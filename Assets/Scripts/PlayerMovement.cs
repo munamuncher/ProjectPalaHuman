@@ -70,6 +70,10 @@ public class PlayerMovement : SubjectScript , IDamageable
     private void Update()
     {
         HorizontalMove();
+        if(Input.GetKeyDown(KeyCode.M))
+        {
+            anim.SetTrigger("Skill01");
+        }    
     }
 
     private void HorizontalMove()

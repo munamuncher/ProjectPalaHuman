@@ -14,9 +14,9 @@ public enum GameState
 }
 
 public class GameManager : MonoBehaviour
-{ 
+{
     //todo UImanager 만들어서 UI 옮기기
-    //UI Image---------------------
+    [Header("---------UI--------")]
     [SerializeField]
     private Image spPointBar;    
     [SerializeField]
@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Image manaBar;
 
-    //PopUpGameObjects-------------
+    [Header("-------PopUp-------")]
     [SerializeField]
     private GameObject pausePopUp;
     [SerializeField]
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject levelUpPopUp;
 
-    //UI Text---------------------
+    [Header("-------UIText------")]
     [SerializeField]
     private TextMeshProUGUI gameEndText;   
     [SerializeField]
@@ -52,8 +52,10 @@ public class GameManager : MonoBehaviour
     private bool hasLevelUp;
     private int spawnPoints;
     private int maxSpawnPonints;
-    private LevelUpPopUp lvlupPopCS;
+    private int SkillUseageCount;
 
+    private LevelUpPopUp lvlupPopCS;
+    private PlayerMovement pm;
 
     private static GameManager _instance;
     public static GameManager Inst => _instance;
@@ -79,7 +81,11 @@ public class GameManager : MonoBehaviour
                 Debug.Log("GameManager.cs - Awake() - LevelUpPopUp 참조 실패");
             }
         }
-        
+        pm = FindFirstObjectByType<PlayerMovement>();
+        if(!pm)
+        {
+            Debug.Log("playerMovement.cs 참조 실패");
+        }
         StateOfGame(GameState.GameStart);
     }
 
@@ -135,7 +141,8 @@ public class GameManager : MonoBehaviour
 
         }
     }
-    
+
+
     private void UpdatePoint()
     {
         if (spawnPoints > 0)
@@ -150,6 +157,33 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
+
+    public bool CanCast(int mpCost)
+    {
+        return manaPoint >= mpCost;
+    }
+
+    public void isCast(int mpCost)
+    {
+        if (manaPoint - mpCost >= mpCost)
+        {
+            manaPoint -= mpCost;
+        }
+        else
+        {
+            manaPoint = 0;
+        }
+    }
+    public int ManaPoints
+    {
+        set
+        {
+            manaPoint = value;
+            UpdatePoint();
+
+        }
+        get { return manaPoint; }
+    }
     IEnumerator EarnMana()
     {
         
@@ -164,7 +198,6 @@ public class GameManager : MonoBehaviour
             {
                 manaPoint += 5;
                 UpdateMana();
-                Debug.Log("EarnMana else is being called");
             }
             yield return new WaitForSeconds(0.5f);
         }
@@ -175,19 +208,19 @@ public class GameManager : MonoBehaviour
         
         if(manaPoint > 0)
         {  
-            Debug.Log("Update mana is called");
-            Debug.Log("mana is rising" +  manaPoint);
             manaPointtext.text = (manaPoint.ToString() + "/"+ maxManaPoint.ToString());
             float manaPointPercentage = (float)manaPoint / maxManaPoint;
             manaBar.fillAmount = manaPointPercentage;
         }
         else
         {
-            Debug.Log("setting it zero");
             manaBar.fillAmount = 0;
         }
     }
+    public void ManaUsage()
+    {
 
+    }
     #region _GameState_
     private void GameEndText_Update(GameState GameEnd)
     {
@@ -219,9 +252,14 @@ public class GameManager : MonoBehaviour
         }
         else if(EndStar == GameState.GameWin) // todo 조건에 따라 별 휙득
         {
-            Debug.Log("Game Win has been called now fillin the stars");
-           stars[0].gameObject.SetActive(true);
-           stars[2].gameObject.SetActive(true);
+            if (pm.HP > 50)
+            {
+                stars[1].gameObject.SetActive(true);
+            }
+            if(SkillUseageCount >  5)
+            {
+                stars[2].gameObject.SetActive(true);
+            }
         }
     }
     #endregion
@@ -272,10 +310,7 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    public void SkillInput(string SkillName)
-    {
 
-    }
     private void DisplayLevelUpSelection()
     {
         

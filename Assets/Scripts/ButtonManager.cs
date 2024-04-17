@@ -18,8 +18,5 @@ public class ButtonManager : MonoBehaviour
     {
         UnitSpawnScript._Instances.SpawnUnit(id, Faction.Ally);
     }
-    public void SkillUsed(string skillname)
-    {
 
-    }
 }

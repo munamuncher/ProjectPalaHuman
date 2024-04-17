@@ -77,7 +77,6 @@ public class UnitSpawnScript : MonoBehaviour
             {
                 GameObject newUnit = Instantiate(unitPrefabDictionary[id], spawnPoints[ran].position, Quaternion.identity);
                 SetLayer(ran, newUnit);
-                //스폰 포인트의 따라 레이어 지정을 여기서??
                 newUnit.SetActive(true);
                 Debug.Log(usd.scriptableDictionary[id].Cost);
 
