@@ -158,22 +158,8 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    public bool CanCast(int mpCost)
-    {
-        return manaPoint >= mpCost;
-    }
+    #region _Mana&SkillCast_
 
-    public void isCast(int mpCost)
-    {
-        if (manaPoint - mpCost >= mpCost)
-        {
-            manaPoint -= mpCost;
-        }
-        else
-        {
-            manaPoint = 0;
-        }
-    }
     public int ManaPoints
     {
         set
@@ -221,6 +207,8 @@ public class GameManager : MonoBehaviour
     {
 
     }
+    #endregion
+
     #region _GameState_
     private void GameEndText_Update(GameState GameEnd)
     {
@@ -252,6 +240,7 @@ public class GameManager : MonoBehaviour
         }
         else if(EndStar == GameState.GameWin) // todo Á¶°Ç¿¡ µû¶ó º° È×µæ
         {
+            stars[0].gameObject.SetActive(false);
             if (pm.HP > 50)
             {
                 stars[1].gameObject.SetActive(true);
@@ -324,7 +313,6 @@ public class GameManager : MonoBehaviour
                 GameOverStarUpdate(GameState.GameStart);
                 Time.timeScale = 1f;
                 maxManaPoint = 200;
-                
                 expMaxPoint = 20;
                 maxSpawnPonints = 500;
                 manaPoint = 0;

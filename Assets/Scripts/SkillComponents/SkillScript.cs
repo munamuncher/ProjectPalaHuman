@@ -23,19 +23,19 @@ public class SkillScript : MonoBehaviour
     {       
         if(Input.GetKeyDown(Skill01))
         {
-            ActivateSkill<Skill01script>();
+            ActivateSkill<Skill01script>(); //mana 10
         }
         if (Input.GetKeyDown(Skill02))
         {
-            //activate flamethrower skill
+            ActivateSkill<Skill02script>(); //mana 20으로 너프예정
         }
         if (Input.GetKeyDown(Skill03))
         {
-            //activate shield skill
+            ActivateSkill<Skill03script>();   //mana 50으로 너프예정
         }
         if (Input.GetKeyDown(Skill04))
         {
-            //activate meteorite skill
+            ActivateSkill<Skill04script>();
         }
     }
 

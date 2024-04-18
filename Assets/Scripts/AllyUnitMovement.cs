@@ -22,11 +22,14 @@ public class AllyUnitMovement : MonoBehaviour , IDamageable
     [SerializeField]
     private GameObject enemyTarget;
     [SerializeField]
-    private float maxHealth;
-    private bool canAttack = true;
-    private Animator anim;
+    private float maxHealth;   
     [SerializeField]
     private Image AllyHPbar;
+
+
+    private bool canAttack = true;
+    private Animator anim;
+
 
     public float Healths { get; set; }
     #region Awake

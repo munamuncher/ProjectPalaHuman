@@ -5,16 +5,29 @@ using UnityEngine;
 
 public class Skill01script : SkillComponent
 {
+
+    private void Start()
+    {
+        costOfMana = 10;
+        skillCoolDown = 1f;
+        skillDmg = 0f;
+    }
     public override void Activate()
     {
-        if(GameManager.Inst.CanCast(10))
+        if (CanCast(costOfMana))
         {
-            GameManager.Inst.isCast(10);
-            GameManager.Inst.SpawnPoints += 10;
+            Cast(costOfMana);
+            Skill01Activate();
+            Debug.Log("Skill01 has been activated.");
         }
         else
         {
-            Debug.Log("not enough to activate skill01");
+            Debug.Log("Not enough mana to activate Skill01.");
         }
+    }
+
+    private void Skill01Activate()
+    {
+        GameManager.Inst.SpawnPoints += 10;
     }
 }
