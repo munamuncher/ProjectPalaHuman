@@ -129,7 +129,7 @@ public class MonsterMovement : MonoBehaviour,IDamageable
     {
         if (Healths <= 0)
         {
-            GameManager.Inst.DeathExpUp();
+            //GameManager.Inst.DeathExpUp();
             Destroy(gameObject);
         }
     }

@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class Skill01script : SkillComponent
 {
-
+    private int increaseValue = 10;
     private void Start()
     {
+        skillLevel = 1;
         costOfMana = 10;
         skillCoolDown = 1f;
         skillDmg = 0f;
@@ -28,6 +29,6 @@ public class Skill01script : SkillComponent
 
     private void Skill01Activate()
     {
-        GameManager.Inst.SpawnPoints += 10;
+        //GameManager.Inst.SpawnPoints += increaseValue;
     }
 }

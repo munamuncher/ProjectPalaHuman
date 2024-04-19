@@ -25,7 +25,7 @@ public class UnitSpawnScript : MonoBehaviour
     private MonsterMovement enemyUnitScript;
     private AllyUnitMovement allyUnitScript;
     private static UnitSpawnScript _instances;
-    private GameManager gm;
+    private ResourceManager rm;
     public static UnitSpawnScript _Instances => _instances;
 
     private void Awake()
@@ -68,12 +68,12 @@ public class UnitSpawnScript : MonoBehaviour
 
     public void SpawnUnit(int id, Faction faction)
     {
-        gm = GameManager.Inst;
+        rm = ResourceManager.Instance;
         List<Transform> spawnPoints = faction == Faction.Enemy ? enemySpawnPoints : allySpawnPoints;
         int ran = Random.Range(0, spawnPoints.Count);
         if (usd != null && unitPrefabDictionary.ContainsKey(id))
         {
-            if (gm.CanBuy(usd.scriptableDictionary[id].Cost))
+            if (rm.CanBuy(usd.scriptableDictionary[id].Cost))
             {
                 GameObject newUnit = Instantiate(unitPrefabDictionary[id], spawnPoints[ran].position, Quaternion.identity);
                 SetLayer(ran, newUnit);
@@ -82,7 +82,7 @@ public class UnitSpawnScript : MonoBehaviour
 
                 if (newUnit.TryGetComponent<AllyUnitMovement>(out allyUnitScript))
                 {
-                    gm.isBuy(usd.scriptableDictionary[id].Cost);
+                    rm.isBuy(usd.scriptableDictionary[id].Cost);
                     allyUnitScript._MyData = usd.scriptableDictionary[id];
                     newUnit.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
 

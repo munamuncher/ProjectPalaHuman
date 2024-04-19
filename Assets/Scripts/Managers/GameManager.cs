@@ -44,14 +44,14 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI manaPointtext;
 
-    private int manaPoint;
-    private int maxManaPoint;
-    private int playerLevel;
-    private int expMaxPoint;
-    private int expPoints;
-    private bool hasLevelUp;
-    private int spawnPoints;
-    private int maxSpawnPonints;
+    private int manaPoint;   // pm
+    private int maxManaPoint; //pm
+    private int playerLevel;  //pm
+    private int expMaxPoint;  //pm
+    private int expPoints;   //pm
+    private bool hasLevelUp; //pm
+    //private int spawnPoints;  //rm
+    //private int maxSpawnPonints; //rm
     private int SkillUseageCount;
 
     private LevelUpPopUp lvlupPopCS;
@@ -89,75 +89,6 @@ public class GameManager : MonoBehaviour
         StateOfGame(GameState.GameStart);
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.G))
-        {
-            spawnPoints += 100;
-        }
-    }
-    #region _Buy_&&_Spawn_
-    public bool CanBuy(int cost)
-    {
-        return spawnPoints >= cost;
-    }
-
-    public void isBuy(int cost)
-    {
-        if(spawnPoints - cost >= cost)
-        {
-            spawnPoints -= cost;
-        }
-        else
-        {
-            spawnPoints = 0;
-        }
-    }
-    public int SpawnPoints
-    {
-        set 
-        {
-            spawnPoints = value;
-            UpdatePoint();
-
-        }
-        get { return spawnPoints; }
-    }
-    IEnumerator EarnPoints()
-    {
-        while (true)
-        {
-            if (spawnPoints >= maxSpawnPonints)
-            {
-                Debug.Log("maxPoints");
-            }
-            else
-            {
-                spawnPoints += 5;
-                UpdatePoint();
-
-            }
-            yield return new WaitForSeconds(0.5f);
-
-        }
-    }
-
-
-    private void UpdatePoint()
-    {
-        if (spawnPoints > 0)
-        {
-            spawnPointText.text = (spawnPoints.ToString() + "/" + maxSpawnPonints.ToString());
-            float spawnPointPercentage = (float)spawnPoints / maxSpawnPonints;
-            spPointBar.fillAmount = spawnPointPercentage;
-        }
-        else
-        {
-            spPointBar.fillAmount = 0;
-        }
-    }
-    #endregion
-
     #region _Mana&SkillCast_
 
     public int ManaPoints
@@ -165,7 +96,7 @@ public class GameManager : MonoBehaviour
         set
         {
             manaPoint = value;
-            UpdatePoint();
+            UpdateMana();
 
         }
         get { return manaPoint; }
@@ -254,49 +185,14 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region _EXP_&&_LevelUp_
-    public void DeathExpUp()
-    {
-        expPoints += 5;
-        ExpBar_Update();
-        Debug.Log("exp has risen" + expPoints);
-    }
+    //public void DeathExpUp()
+    //{
+    //    expPoints += 5;
+    //    ExpBar_Update();
+    //    Debug.Log("exp has risen" + expPoints);
+    //}
 
-    private void ExpBar_Update()
-    {
-        if (expPoints >= expMaxPoint)
-        {
-            hasLevelUp = true;
-        }
-        if (!hasLevelUp)
-        {
-            float expPointsPercentage = (float)expPoints / expMaxPoint;
-            expBar.fillAmount = expPointsPercentage;
-        }
-        else
-        {
-            LevelUp();
-            expPoints = 0;
-            expBar.fillAmount = 0;
-        }
-    }
 
-    private void LevelUp()
-    {
-        if(hasLevelUp)
-        {
-            expMaxPoint *= 2;
-            Debug.Log(expMaxPoint);
-            playerLevel++;
-            expBarText.text = playerLevel.ToString();
-            levelUpPopUp.gameObject.SetActive(true);
-            lvlupPopCS.Displayskill(); // todo Skill script 완성후 스킬 종류를 게임 매니저한테 받아서 levelupPopup 한테 전달
-            StateOfGame(GameState.GamePause);
-        }
-        else
-        {
-            expBarText.text = playerLevel.ToString();
-        }
-    }
     #endregion
 
 
@@ -314,16 +210,16 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 1f;
                 maxManaPoint = 200;
                 expMaxPoint = 20;
-                maxSpawnPonints = 500;
-                manaPoint = 0;
-                spawnPoints = 0;
-                expPoints = 0;
-                playerLevel = 1;
-                hasLevelUp = false;
-                UpdatePoint();
+                //maxSpawnPonints = 500;
+                //manaPoint = 0I
+                //spawnPoints = 0;
+                //expPoints = 0;
+                //playerLevel = 1;
+                //hasLevelUp = false;
+                //UpdatePoint();
                 UpdateMana();
-                LevelUp();
-                ExpBar_Update();
+                //LevelUp();
+                //ExpBar_Update();
                 StartCoroutine("EarnMana");
                 StartCoroutine("EarnPoints");  
                 pausePopUp.SetActive(false);

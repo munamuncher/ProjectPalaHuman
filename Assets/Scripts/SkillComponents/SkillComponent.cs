@@ -7,6 +7,7 @@ public abstract class SkillComponent : MonoBehaviour
 
     public abstract void Activate();
 
+    protected int skillLevel;
     protected int costOfMana;
     protected float skillCoolDown;
     protected float skillDmg;

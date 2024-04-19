@@ -6,6 +6,7 @@ public class Skill04script : SkillComponent
 {
     private void Start()
     {
+        skillLevel = 1;
         costOfMana = 200;
         skillCoolDown = 30f;
         skillDmg = 500;
