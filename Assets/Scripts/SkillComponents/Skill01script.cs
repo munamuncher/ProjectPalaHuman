@@ -29,6 +29,6 @@ public class Skill01script : SkillComponent
 
     private void Skill01Activate()
     {
-        //GameManager.Inst.SpawnPoints += increaseValue;
+        ResourceManager.Instance.SpawnPoints += increaseValue;
     }
 }

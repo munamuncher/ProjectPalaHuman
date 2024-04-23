@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    private int manaPoint; 
-    private int maxManaPoint; 
-    private int playerLevel;  
-    private int expMaxPoint; 
-    private int expPoints;  
-    private bool hasLevelUp;
+    private int manaPoint;
+    public int maxManaPoint { get; set; }
+    public int playerLevel { get; set; }
+    public int expMaxPoint { get; set; }
+    public int expPoints { get; set; }
+    public bool hasLevelUp { get; set; }
 
 
     private static PlayerManager _instance;
@@ -23,7 +23,7 @@ public class PlayerManager : MonoBehaviour
             {
                 _instance = FindObjectOfType<PlayerManager>();
 
-                
+
                 if (_instance == null)
                 {
                     GameObject PlayerManager = new GameObject("PlayerManager");
@@ -39,7 +39,7 @@ public class PlayerManager : MonoBehaviour
         set
         {
             manaPoint = value;
-            //UpdateMana();
+            UIManager.Instance.UpdateMana();
 
         }
         get { return manaPoint; }
@@ -57,7 +57,7 @@ public class PlayerManager : MonoBehaviour
             else
             {
                 manaPoint += 5;
-                //UpdateMana();
+                UIManager.Instance.UpdateMana();
             }
             yield return new WaitForSeconds(0.5f);
         }

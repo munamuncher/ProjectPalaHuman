@@ -1729,6 +1729,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 91432978}
   m_CullTransparentMesh: 1
+--- !u!1 &93551328
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 93551329}
+  m_Layer: 0
+  m_Name: ---------------Data &&& etc-----------
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &93551329
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93551328}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &94746715
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4810,6 +4841,50 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &357429461
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 357429463}
+  - component: {fileID: 357429462}
+  m_Layer: 0
+  m_Name: ResoursceManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &357429462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357429461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eefb14f41033e404ca1f84bbd49d07d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &357429463
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357429461}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &363068778
 GameObject:
   m_ObjectHideFlags: 0
@@ -20102,6 +20177,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1593891067}
   m_CullTransparentMesh: 1
+--- !u!1 &1606097892
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1606097894}
+  - component: {fileID: 1606097893}
+  m_Layer: 0
+  m_Name: PlayerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1606097893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606097892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55fb8683c301a4741939c46f36c785e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1606097894
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606097892}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1610378155
 GameObject:
   m_ObjectHideFlags: 0
@@ -21972,6 +22091,64 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1764216245
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1764216247}
+  - component: {fileID: 1764216246}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1764216246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764216245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7c9ebdc2bbf760469a7f3034184632d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spPointBar: {fileID: 1131478207}
+  expBar: {fileID: 1297877366}
+  manaBar: {fileID: 125268913}
+  spawnPointText: {fileID: 2071225920}
+  expBarText: {fileID: 891188759}
+  manaPointtext: {fileID: 204641913}
+  gameEndText: {fileID: 694829701}
+  pausePopUp: {fileID: 2096953414}
+  gameOverPopUp: {fileID: 1521000318}
+  levelUpPopUp: {fileID: 789210099}
+  stars:
+  - {fileID: 1117433860}
+  - {fileID: 664491176}
+  - {fileID: 632104701}
+--- !u!4 &1764216247
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764216245}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1775722902
 GameObject:
   m_ObjectHideFlags: 0
@@ -22790,20 +22967,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eab6a9a95bc8bbd47b91cef11495200b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spPointBar: {fileID: 1131478207}
-  expBar: {fileID: 1297877366}
-  manaBar: {fileID: 125268913}
-  pausePopUp: {fileID: 2096953414}
-  gameOverPopUp: {fileID: 1521000318}
-  stars:
-  - {fileID: 1117433860}
-  - {fileID: 664491176}
-  - {fileID: 632104701}
-  levelUpPopUp: {fileID: 789210099}
-  gameEndText: {fileID: 694829701}
-  spawnPointText: {fileID: 2071225920}
-  expBarText: {fileID: 891188759}
-  manaPointtext: {fileID: 204641913}
+  SkillUseageCount: 0
 --- !u!4 &1882547958
 Transform:
   m_ObjectHideFlags: 0
@@ -26042,6 +26206,10 @@ SceneRoots:
   - {fileID: 363068779}
   - {fileID: 1882547958}
   - {fileID: 1242114189}
-  - {fileID: 1994698989}
+  - {fileID: 1764216247}
+  - {fileID: 357429463}
+  - {fileID: 1606097894}
   - {fileID: 484698421}
   - {fileID: 1364843224}
+  - {fileID: 93551329}
+  - {fileID: 1994698989}

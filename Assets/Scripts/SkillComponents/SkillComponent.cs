@@ -14,12 +14,12 @@ public abstract class SkillComponent : MonoBehaviour
 
     protected bool CanCast(int mpCost)
     {
-        return GameManager.Inst.ManaPoints >= mpCost;
+        return PlayerManager.Instance.ManaPoints >= mpCost;
     }
 
     protected void Cast(int mpCost)
     {
-        GameManager.Inst.ManaPoints -= mpCost;
+        PlayerManager.Instance.ManaPoints -= mpCost;
     }
     private void ActivateSkill()
     {

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
 {
-    private int spawnPoints;
-    private int maxSpawnPoints;
+    private int spawnPoints { get; set; }
+    private int maxSpawnPoints { get; set; }
 
     private static ResourceManager _instance;
 
@@ -65,10 +65,12 @@ public class ResourceManager : MonoBehaviour
             if (spawnPoints >= maxSpawnPoints)
             {
                 Debug.Log("maxPoints");
+                
             }
             else
             {
                 spawnPoints += 5;
+                UIManager.Instance.UpdatePoint();
             }
             yield return new WaitForSeconds(0.5f);
 

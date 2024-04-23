@@ -64,6 +64,7 @@ public class MonsterMovement : MonoBehaviour,IDamageable
     }
     private void FixedUpdate()
     {
+        Debug.Log(canAttack);
         rayCastTarget();
         if (target == null)
         {
@@ -111,7 +112,7 @@ public class MonsterMovement : MonoBehaviour,IDamageable
         canAttack = false;
         anim.SetTrigger("Attack");
         yield return new WaitForSeconds(0.5f);
-        if (target.TryGetComponent(out IDamageable hits))
+        if (target != null && target.TryGetComponent(out IDamageable hits)) //항상 null 확인
         {
             hits.Damage(myData.Damage);
         }
@@ -129,7 +130,7 @@ public class MonsterMovement : MonoBehaviour,IDamageable
     {
         if (Healths <= 0)
         {
-            //GameManager.Inst.DeathExpUp();
+            GameManager.Inst.DeathExpUp();
             Destroy(gameObject);
         }
     }
