@@ -64,7 +64,6 @@ public class MonsterMovement : MonoBehaviour,IDamageable
     }
     private void FixedUpdate()
     {
-        Debug.Log(canAttack);
         rayCastTarget();
         if (target == null)
         {

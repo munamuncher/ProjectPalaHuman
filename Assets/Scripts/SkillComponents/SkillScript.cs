@@ -35,7 +35,7 @@ public class SkillScript : MonoBehaviour
         }
         if (Input.GetKeyDown(Skill04))
         {
-            ActivateSkill<Skill04script>();
+            ActivateSkill<Skill04script>(); //mana 200으로 너프
         }
     }
 

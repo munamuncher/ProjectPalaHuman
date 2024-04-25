@@ -19,9 +19,11 @@ public class GameManager : MonoBehaviour
     public int SkillUseageCount;
     public int MaxTimeLimit = 300;
     private float timer = 0.0f;
+
     private GameObject levelUpPop;
     private LevelUpPopUp lvlupPopCS;
     private PlayerMovement pm;
+
     private PlayerManager playerManager;
     private UIManager um;
     private ResourceManager rm;
