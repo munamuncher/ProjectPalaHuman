@@ -7,12 +7,10 @@ public class Skill02script : SkillComponent, IDamageable
 
     [SerializeField]
     private GameObject skillDetection;
-    [SerializeField]
-    private bool FireIsOn;
     private float duration = 5f;
     private int enemeyCount;
-    [SerializeField]
-    private List<GameObject> targetList = new List<GameObject>();
+
+    private PlayerMovement pm;
     public float Healths { get; set; }
 
     private void OnDrawGizmosSelected()
@@ -20,19 +18,23 @@ public class Skill02script : SkillComponent, IDamageable
         if (skillDetection != null)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(skillDetection.transform.position, new Vector3(2f, 1f, 0f));
+            Gizmos.DrawWireCube(skillDetection.transform.position, new Vector3(3f, 1f, 0f));
         }
     }
     private void Start()
     {
-        FireIsOn = false;
+        pm = FindFirstObjectByType<PlayerMovement>();
+        if (!pm)
+        {
+            Debug.Log("playerMovement.cs 참조 실패");
+        }
         skillLevel = 1;
         costOfMana = 20;
         skillCoolDown = 5f;
         skillDmg = 10f;
     }
 
-    
+
 
     public override void Activate()
     {
@@ -40,7 +42,6 @@ public class Skill02script : SkillComponent, IDamageable
         {
             Cast(costOfMana);
             StartCoroutine(ActivationSkill());
-            FireIsOn = true;
             Debug.Log("Skill02 has been activated.");
         }
         else
@@ -52,43 +53,40 @@ public class Skill02script : SkillComponent, IDamageable
 
     IEnumerator ActivationSkill()
     {
-
         int mask = (1 << 8) | (1 << 9);
-
-        while (true)
+        if (skillDetection == null)
         {
-            if (skillDetection == null)
-            {
-                Debug.LogError("Skill Detection GameObject is not set.");
-                yield break;
-            }
-            while (duration > 0)
-            {
-                Collider2D[] colliders = Physics2D.OverlapBoxAll(skillDetection.transform.position, new Vector2(2f, 1f), 0f, mask);
-                foreach (Collider2D collider in colliders)
-                {
-                    GameObject obj = collider.gameObject;
-                    targetList.Add(obj);           
-                    Debug.Log(targetList.Count);
-                }
-                duration -= Time.deltaTime;
-                Debug.Log(duration);
-
-            }
-            while(duration > 0)
-            {
-                Debug.Log("doing dmg doing dmg");
-                yield return new WaitForSeconds(1f);
-            }
-            if (duration < 0)
-            {
-                yield return null;
-            }
+            Debug.LogError("Skill Detection GameObject is not set.");
+            yield break;
         }
+        while (duration > 0)
+        {
+            pm.anim.SetTrigger("skill02");
+            Collider2D[] colliders = Physics2D.OverlapBoxAll(skillDetection.transform.position, new Vector2(3f, 1f), 0f, mask);
+            foreach (Collider2D collider in colliders)
+            {
+                GameObject obj = collider.gameObject;
+                if (obj != null && obj.TryGetComponent(out IDamageable hits))
+                {
+                    hits.Damage(10f);
+                }
+                Debug.Log("Detecting " + obj.name);
+            }
+            duration -= 1;
+            yield return new WaitForSeconds(1f);
+
+        }
+        Resetskill();
+
     }
 
+    private void Resetskill()
+    {
+        Debug.Log("reseting");
+        duration = 5f;
+    }
     public void Damage(float Amount)
     {
-        
+
     }
 }

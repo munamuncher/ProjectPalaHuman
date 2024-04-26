@@ -9,7 +9,7 @@ public class PlayerMovement : SubjectScript , IDamageable
     private Rigidbody2D rg;
     private CapsuleCollider2D ccd;
     private SpriteRenderer sr;
-    private Animator anim;
+    public Animator anim;
     Vector3 Move;
     private float moveSpeed =5f;
     [SerializeField]
@@ -70,10 +70,6 @@ public class PlayerMovement : SubjectScript , IDamageable
     private void Update()
     {
         HorizontalMove();
-        if(Input.GetKeyDown(KeyCode.M))
-        {
-            anim.SetTrigger("Skill01");
-        }    
     }
 
     private void HorizontalMove()
