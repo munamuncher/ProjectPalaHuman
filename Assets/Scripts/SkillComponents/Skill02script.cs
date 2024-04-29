@@ -61,7 +61,7 @@ public class Skill02script : SkillComponent, IDamageable
         }
         while (duration > 0)
         {
-            pm.anim.SetTrigger("skill02");
+            //pm.anim.SetTrigger("skill02");   todo animManager 완료후 넣을 에정
             Collider2D[] colliders = Physics2D.OverlapBoxAll(skillDetection.transform.position, new Vector2(3f, 1f), 0f, mask);
             foreach (Collider2D collider in colliders)
             {
