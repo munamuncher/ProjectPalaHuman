@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Skill01script : SkillComponent
 {
+    private GameObject Player;
     private int increaseValue = 10;
     private void Start()
     {
@@ -12,6 +13,11 @@ public class Skill01script : SkillComponent
         costOfMana = 10;
         skillCoolDown = 1f;
         skillDmg = 0f;
+        Player = GameObject.Find("Player");
+        if(!Player)
+        {
+            Debug.Log("참조 실패");
+        }
     }
     public override void Activate()
     {
@@ -30,5 +36,7 @@ public class Skill01script : SkillComponent
     private void Skill01Activate()
     {
         ResourceManager.Instance.SpawnPoints += increaseValue;
+        Player.TryGetComponent<Animator>(out Animator anim);
+        anim.SetTrigger("Skill01");
     }
 }

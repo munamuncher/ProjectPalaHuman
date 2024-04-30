@@ -86,11 +86,10 @@ public class UIManager : MonoBehaviour
         if (pm.hasLevelUp)
         {
             pm.expMaxPoint *= 2;
-            Debug.Log(pm.expMaxPoint);
             pm.playerLevel++;
             expBarText.text = pm.playerLevel.ToString();
             levelUpPopUp.gameObject.SetActive(true);
-            GameManager.Inst.DisplaySkills();// todo Skill script 완성후 스킬 종류를 게임 매니저한테 받아서 levelupPopup 한테 전달
+            //GameManager.Inst.DisplaySkills();// todo Skill script 완성후 스킬 종류를 게임 매니저한테 받아서 levelupPopup 한테 전달
             GameManager.Inst.StateOfGame(GameState.GamePause);
         }
         else
@@ -132,12 +131,12 @@ public class UIManager : MonoBehaviour
     {
         if (EndStar == GameState.GameStart)
         {
-            Debug.Log("Game start has been called and will trun off all the stars");
+            //Debug.Log("Game start has been called and will trun off all the stars");
             for (int i = 0; i <= 2; i++)
             {
-                Debug.Log("turning off all stars");
+                //Debug.Log("turning off all stars");
                 stars[i].gameObject.SetActive(false);
-                Debug.Log(stars[i].gameObject);
+                //Debug.Log(stars[i].gameObject);
             }
         }
         else if (EndStar == GameState.GameWin) // todo 조건에 따라 별 휙득  leentween으로 수정

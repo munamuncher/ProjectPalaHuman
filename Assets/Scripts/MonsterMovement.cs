@@ -24,9 +24,6 @@ public class MonsterMovement : MonoBehaviour,IDamageable
     private bool canAttack = true;
     [SerializeField]
     private Image enemyHPBar;
-    
-
-
     public float Healths { get; set; }
     #region Awake
     private void Awake()
@@ -127,7 +124,7 @@ public class MonsterMovement : MonoBehaviour,IDamageable
     }
     public void Dead()
     {
-        if (Healths <= 0)
+        if (Healths < 0)
         {
             GameManager.Inst.DeathExpUp();
             Destroy(gameObject);
@@ -138,6 +135,7 @@ public class MonsterMovement : MonoBehaviour,IDamageable
     {
         if (currentHP > 0)
         {
+            Debug.Log(currentHP);
             float healthPercentage = (float)currentHP / maxHP;
             enemyHPBar.fillAmount = healthPercentage;
             enemyHPBar.fillAmount = healthPercentage;

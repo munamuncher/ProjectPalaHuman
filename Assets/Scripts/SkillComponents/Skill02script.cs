@@ -10,7 +10,7 @@ public class Skill02script : SkillComponent, IDamageable
     private float duration = 5f;
     private int enemeyCount;
 
-    private PlayerMovement pm;
+    private GameObject player;
     public float Healths { get; set; }
 
     private void OnDrawGizmosSelected()
@@ -23,10 +23,10 @@ public class Skill02script : SkillComponent, IDamageable
     }
     private void Start()
     {
-        pm = FindFirstObjectByType<PlayerMovement>();
-        if (!pm)
+        player = GameObject.Find("Player");
+        if(!player)
         {
-            Debug.Log("playerMovement.cs 참조 실패");
+            Debug.Log("플레이어 참조 실패");
         }
         skillLevel = 1;
         costOfMana = 20;
@@ -42,6 +42,7 @@ public class Skill02script : SkillComponent, IDamageable
         {
             Cast(costOfMana);
             StartCoroutine(ActivationSkill());
+            ActivateAnimation();
             Debug.Log("Skill02 has been activated.");
         }
         else
@@ -50,7 +51,11 @@ public class Skill02script : SkillComponent, IDamageable
         }
     }
 
-
+    private void ActivateAnimation() // todo 스킬 사용시 한쪽 방향만 보게 만들것
+    {
+        player.TryGetComponent<Animator>(out Animator anim);
+        anim.SetTrigger("Skill02");
+    }
     IEnumerator ActivationSkill()
     {
         int mask = (1 << 8) | (1 << 9);

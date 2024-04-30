@@ -1,25 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SkillScript : MonoBehaviour
 {
     public SkillComponent[] skillComponents;
-    [Header("Skill Inputs")]
-    [SerializeField] private string skill01Input = "Skill01";
-    [SerializeField] private string skill02Input = "Skill02";
-    [SerializeField] private string skill03Input = "Skill03";
-    [SerializeField] private string skill04Input = "Skill04";
-
     private void Start()
     {
         InitializeSkillComponents();
+        
+        
     }
 
     private void Update()
     {
         CheckSkillActivation();
     }
+
 
     private void InitializeSkillComponents()
     {
@@ -30,19 +28,19 @@ public class SkillScript : MonoBehaviour
     }
     private void CheckSkillActivation()
     {
-        if (Input.GetButtonDown(skill01Input))
+        if (Keyboard.current.hKey.wasPressedThisFrame)
         {
             ActivateSkill<Skill01script>();
         }
-        if (Input.GetButtonDown(skill02Input))
+        if (Keyboard.current.jKey.wasPressedThisFrame)
         {
             ActivateSkill<Skill02script>();
         }
-        if (Input.GetButtonDown(skill03Input))
+        if (Keyboard.current.kKey.wasPressedThisFrame)
         {
             ActivateSkill<Skill03script>();
         }
-        if (Input.GetButtonDown(skill04Input))
+        if (Keyboard.current.lKey.wasPressedThisFrame)
         {
             ActivateSkill<Skill04script>();
         }

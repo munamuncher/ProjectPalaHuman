@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
@@ -12,8 +14,8 @@ public class PlayerMovement : SubjectScript , IDamageable
     public Animator anim;
     Vector3 Move;
     private float moveSpeed =5f;
-    [SerializeField]
-    private float moveDir;
+    //[SerializeField]
+    //private float moveDir;
     public float maxHP;
     public float HP;
     private bool isDead;
@@ -67,28 +69,26 @@ public class PlayerMovement : SubjectScript , IDamageable
         
 
     }
-    private void Update()
-    {
-        HorizontalMove();
-    }
 
-    private void HorizontalMove()
+
+
+    private void OnPlayerAction(InputValue value)
     {
-        moveDir = Input.GetAxis("Horizontal");
-        Move = new Vector3(moveDir, 0f);
+        Vector2 moveDir = value.Get<Vector2>();
+        Move = new Vector3(moveDir.x, 0f,0f);
         Move.x = Mathf.Clamp(Move.x, -19.15f, 17.15f);
 
-        if(moveDir < 0f)
+        if (moveDir.x < 0f)
         {
             anim.SetFloat("Moving", 1f);
             sr.flipX = true;
         }
-        else if(moveDir > 0f)
+        else if (moveDir.x > 0f)
         {
             anim.SetFloat("Moving", 1f);
             sr.flipX = false;
         }
-        else if(moveDir == 0f)
+        else if (moveDir.x == 0f)
         {
             anim.SetFloat("Moving", 0f);
         }
@@ -103,7 +103,7 @@ public class PlayerMovement : SubjectScript , IDamageable
     {
         if (!isDead)
         {
-            anim.SetTrigger("HasBeenHit");
+            //anim.SetTrigger("HasBeenHit");
             Healths -= DamageAmount;
             HP = Healths;
             Debug.Log(gameObject.name + " has taken" + DamageAmount + "Damage" + HP + "remainging");
