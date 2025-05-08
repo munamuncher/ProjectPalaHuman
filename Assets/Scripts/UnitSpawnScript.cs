@@ -112,7 +112,7 @@ public class UnitSpawnScript : MonoBehaviour
         Debug.Log("Setting layer of" + target + "retreived" + spawnPosLayer);
         if(!target.TryGetComponent<SortingGroup>(out SortingGroup sg))
         {
-            Debug.Log("UnitSpawnScript.cs - SetLayer() - SortingGroup참조 실패");
+            Debug.Log("UnitSpawnScript.cs - SetLayer() - SortingGroup not Found");
         }
         switch (spawnPosLayer)
         {
