@@ -37,7 +37,7 @@ public class AllyUnitMovement : MonoBehaviour , IDamageable
     {
         if (!TryGetComponent<Rigidbody2D>(out rg))
         {
-            Debug.Log("AllyUnitMovement.cs - Awake() - RigidBodyÂüÁ¶ ½ÇÆÐ");
+            Debug.Log("AllyUnitMovement.cs - Awake() - RigidBodyì°¸ì¡° ì‹¤íŒ¨");
         }
         else
         {
@@ -47,11 +47,11 @@ public class AllyUnitMovement : MonoBehaviour , IDamageable
 
         if (!TryGetComponent<CapsuleCollider2D>(out ccd))
         {
-            Debug.Log("AllyUnitMovement.cs - Awake() - CapsuleCollider2DÂüÁ¶ ½ÇÆÐ");
+            Debug.Log("AllyUnitMovement.cs - Awake() - CapsuleCollider2Dì°¸ì¡° ì‹¤íŒ¨");
         }
         if (!TryGetComponent<Animator>(out anim))
         {
-            Debug.Log("AllyUnitMovement.cs - Awake() - AnimatorÂüÁ¶ ½ÇÆÐ");
+            Debug.Log("AllyUnitMovement.cs - Awake() - Animatorì°¸ì¡° ì‹¤íŒ¨");
         }
         else
         {
@@ -110,40 +110,31 @@ public class AllyUnitMovement : MonoBehaviour , IDamageable
     {
         canAttack = false;
         anim.SetTrigger("Attack");
-        if (enemyTarget.TryGetComponent(out IDamageable hits))
+        if (enemyTarget != null && enemyTarget.TryGetComponent(out IDamageable target))
         {
-            hits.Damage(_myData.Damage);
+            target.Damage(_myData.Damage);
         }
-        yield return new WaitForSeconds(_myData.AttackSpeed);        
-
+    
+        yield return new WaitForSeconds(_myData.AttackSpeed);
         canAttack = true;
 
     }
 
-    public void Damage(float DamageAmount)
+    public void Damage(float damageAmount)
     {
-        Healths -= DamageAmount;
-        ReduceMonHp(Healths, _myData.Health);
-        AllyDead();
+        Healths -= damageAmount;
+        UpdateHealthBar(Healths, _myData.Health);
+        CheckDeath();
     }
-    public void AllyDead()
+    
+    private void CheckDeath()
     {
         if (Healths <= 0)
-        {
             Destroy(gameObject);
-        }
     }
-
-    private void ReduceMonHp(float currentHP, float maxHP)
+    
+    private void UpdateHealthBar(float currentHP, float maxHP)
     {
-        if (currentHP > 0)
-        {
-            float healthPercentage = (float)currentHP / maxHP;
-            AllyHPbar.fillAmount = healthPercentage;
-            AllyHPbar.fillAmount = healthPercentage;
-
-        }
-        else
-            AllyHPbar.fillAmount = 0;
+        AllyHPbar.fillAmount = Mathf.Clamp01(currentHP / maxHP);
     }
 }
