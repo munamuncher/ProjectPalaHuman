@@ -108,31 +108,12 @@ public class UnitSpawnScript : MonoBehaviour
 
     private void SetLayer(int spawnPosLayer , GameObject target)
     {
-        
         Debug.Log("Setting layer of" + target + "retreived" + spawnPosLayer);
         if(!target.TryGetComponent<SortingGroup>(out SortingGroup sg))
         {
             Debug.Log("UnitSpawnScript.cs - SetLayer() - SortingGroup not Found");
         }
-        switch (spawnPosLayer)
-        {
-            case 0:
-                sg.sortingOrder = 1;
-                Debug.Log("Setting layer to" + target.layer + " have increased");
-                break;
-            case 1:
-                sg.sortingOrder = 2;
-                Debug.Log("Setting layer to" + target.layer + " have increased");
-                break;
-            case 2:
-                sg.sortingOrder = 3;
-                Debug.Log("Setting layer to" + target.layer + " have increased");
-                break;
-            case 3:
-                sg.sortingOrder = 4;
-                Debug.Log("Setting layer to" + target.layer + " have increased");
-                break;
-
-        }
+        sg.sortingOrder = spawnPosLayer + 1;
+        Debug.Log("Setting layer of " + target.name + " to " + sg.sortingOrder);
     }
 }
